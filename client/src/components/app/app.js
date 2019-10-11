@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import setAuthToken from '../../utils/setAuthToken';
 import { setCurrentUser, logoutUser } from '../../actions/authActions';
@@ -12,6 +12,7 @@ import Footer from '../footer/footer';
 import Register from '../register/register.container';
 import Login from '../login/login.container';
 import Dashboard from '../dashboard/dashboard.container';
+import PrivateRoute from '../privateRoute/privateRoute.container';
 
 if (localStorage.jwtToken) {
   setAuthToken(localStorage.jwtToken);
@@ -37,7 +38,9 @@ class App extends Component {
             <div className="container">
               <Route path="/register" component={Register} />
               <Route path="/login" component={Login} />
-              <Route path="/dashboard" component={Dashboard} />
+              <Switch>
+              <PrivateRoute path="/dashboard" component={Dashboard} />
+              </Switch>
             </div>
             <Footer />
           </div>
