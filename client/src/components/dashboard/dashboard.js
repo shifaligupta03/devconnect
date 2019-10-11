@@ -3,7 +3,7 @@ import Proptypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Spinner from '../FormComponents/spinner';
 
-const Dashboard = ({ getCurrentProfile, profile: { loading }, auth: { user } }) => {
+const Dashboard = ({ getCurrentProfile, profile, profile: { loading }, auth: { user } }) => {
     let dashboardContent;
     useEffect(() => {
         getCurrentProfile();
