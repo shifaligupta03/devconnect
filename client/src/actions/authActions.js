@@ -6,11 +6,9 @@ import jwt_decode from 'jwt-decode';
 
 export const registerUser = (userData, history) => async dispatch => {
     try {
-        console.log(userData);
         let res = await axios.post('/api/users/register', userData);
         history.push('/login');
     } catch (err) {
-        console.log(err,'hi', err.response)
         dispatch({
             type: GET_ERRORS,
             payload: err.response.data
@@ -29,7 +27,6 @@ export const loginUser = (userData) => async dispatch => {
         dispatch(setCurrentUser(decoded));
 
     } catch (err) {
-        console.log(err.response.data);
         dispatch({
             type: GET_ERRORS,
             payload: err.response.data
@@ -44,9 +41,10 @@ export const setCurrentUser = (decoded)=>{
     }
 }
 
-export const logoutUser = ()=>dispatch=>{
+export const logoutUser = (history)=>dispatch=>{
     localStorage.removeItem('jwtToken');
     setAuthToken(false);
     dispatch(setCurrentUser({}))
+    history.push('/login');
 
 }

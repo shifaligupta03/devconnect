@@ -4,8 +4,6 @@ import Proptypes from 'prop-types';
 
 const Login = ({ auth, errors, loginUser, history }) => {
 
-    console.log({ auth, errors, loginUser, history });
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -13,7 +11,7 @@ const Login = ({ auth, errors, loginUser, history }) => {
         if (auth.isAuthenticated) {
             history.push('/dashboard');
         }
-    }, []);
+    }, [auth.isAuthenticated]);
 
 
     const handleSubmit = (e) => {
