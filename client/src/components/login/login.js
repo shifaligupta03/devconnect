@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import classnames from 'classnames';
 import Proptypes from 'prop-types';
+import TextFieldGroup from '../FormComponents/TextFieldGroup';
 
 const Login = ({ auth, errors, loginUser, history }) => {
 
@@ -33,36 +33,22 @@ const Login = ({ auth, errors, loginUser, history }) => {
                             Sign in to your DevConnect account
               </p>
                         <form onSubmit={handleSubmit}>
-                            <div className="form-group">
-                                <input
-                                    type="email"
-                                    className={classnames('form-control form-control-lg', {
-                                        'is-invalid': errors.email,
-                                    })}
-                                    placeholder="Email Address"
-                                    name="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                />
-                                {errors.email && (
-                                    <div className="invalid-feedback">{errors.email}</div>
-                                )}
-                            </div>
-                            <div className="form-group">
-                                <input
-                                    type="password"
-                                    className={classnames('form-control form-control-lg', {
-                                        'is-invalid': errors.password,
-                                    })}
-                                    placeholder="Password"
-                                    name="password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                />
-                                {errors.password && (
-                                    <div className="invalid-feedback">{errors.password}</div>
-                                )}
-                            </div>
+                            <TextFieldGroup
+                                placeholder="Email Address"
+                                name="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                error={errors.email}
+                            />
+
+                            <TextFieldGroup
+                                type="password"
+                                placeholder="Password"
+                                name="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                error={errors.password}
+                            />
                             <input type="submit" className="btn btn-info btn-block mt-4" />
                         </form>
                     </div>
@@ -80,4 +66,4 @@ Login.proptypes = {
     loginUser: Proptypes.func.isRequired,
     auth: Proptypes.object.isRequired,
     errors: Proptypes.object.isRequired,
-  };
+};

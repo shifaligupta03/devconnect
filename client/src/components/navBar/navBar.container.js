@@ -2,6 +2,7 @@ import {connect} from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Navbar from './navBar';
 import { logoutUser } from '../../actions/authActions';
+import { clearCurrentProfile } from '../../actions/profileActions';
 
 function mapStateToProps(state) {
     return {
@@ -10,4 +11,4 @@ function mapStateToProps(state) {
     };
   }
 
-export default connect(mapStateToProps, {logoutUser})(withRouter(Navbar));
+export default connect(mapStateToProps, {logoutUser, clearCurrentProfile})(withRouter(Navbar));

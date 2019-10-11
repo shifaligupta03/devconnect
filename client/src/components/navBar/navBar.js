@@ -1,15 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Proptypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-const Navbar = ({ auth, logoutUser, history }) => {
+const Navbar = ({ auth, logoutUser, clearCurrentProfile, history }) => {
   const { isAuthenticated, user } = auth;
   const authLinks = (
     <ul className="navbar-nav ml-auto">
       <li className="nav-item">
         <a
           href="#"
-          onClick={() => logoutUser(history)}
+          onClick={() => {
+            clearCurrentProfile();
+            logoutUser(history);
+          }}
           className="nav-link"
         >
           <img
@@ -77,5 +80,6 @@ export default Navbar;
 
 Navbar.proptypes = {
   logoutUser: Proptypes.func.isRequired,
+  clearCurrentProfile: Proptypes.func.isRequired,
   auth: Proptypes.object.isRequired,
 };

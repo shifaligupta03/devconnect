@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import classnames from 'classnames';
 import Proptypes from 'prop-types';
+import TextFieldGroup from '../FormComponents/TextFieldGroup';
 
 const Register = ({ auth, errors, registerUser, history }) => {
     const [name, setName] = useState('');
@@ -36,66 +36,38 @@ const Register = ({ auth, errors, registerUser, history }) => {
                             Create your DevConnect account
         </p>
                         <form onSubmit={handleSubmit}>
-                            <div className="form-group">
-                                <input
-                                    type="text"
-                                    className={classnames('form-control form-control-lg', {
-                                        'is-invalid': errors.name,
-                                    })}
-                                    placeholder="Name"
-                                    name="name"
-                                    onChange={(e) => setName(e.target.value)}
-                                    value={name}
-                                />
-                                {errors.name && (
-                                    <div className="invalid-feedback">{errors.name}</div>
-                                )}
-                            </div>
-                            <div className="form-group">
-                                <input
-                                    type="email"
-                                    className={classnames('form-control form-control-lg', {
-                                        'is-invalid': errors.email,
-                                    })}
-                                    placeholder="Email Address"
-                                    name="email"
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    value={email}
-                                />
-                                {errors.email && (
-                                    <div className="invalid-feedback">{errors.email}</div>
-                                )}
-                            </div>
-                            <div className="form-group">
-                                <input
-                                    type="password"
-                                    className={classnames('form-control form-control-lg', {
-                                        'is-invalid': errors.password,
-                                    })}
-                                    placeholder="Password"
-                                    name="password"
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    value={password}
-                                />
-                                {errors.password && (
-                                    <div className="invalid-feedback">{errors.password}</div>
-                                )}
-                            </div>
-                            <div className="form-group">
-                                <input
-                                    type="password"
-                                    className={classnames('form-control form-control-lg', {
-                                        'is-invalid': errors.password2,
-                                    })}
-                                    placeholder="Confirm Password"
-                                    name="password2"
-                                    onChange={(e) => setPassword2(e.target.value)}
-                                    value={password2}
-                                />
-                                {errors.password2 && (
-                                    <div className="invalid-feedback">{errors.password2}</div>
-                                )}
-                            </div>
+                            <TextFieldGroup
+                                placeholder="Name"
+                                placeholder="Name"
+                                name="name"
+                                onChange={(e) => setName(e.target.value)}
+                                value={name}
+                                error={errors.name}
+                            />
+                            <TextFieldGroup
+                                placeholder="Email Address"
+                                name="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                error={errors.email}
+                            />
+                            <TextFieldGroup
+                                type="password"
+                                placeholder="Password"
+                                name="password"
+                                onChange={(e) => setPassword(e.target.value)}
+                                value={password}
+                                error={errors.password}
+                                info="This site uses Gravatar so if you want a profile image, use a Gravatar email"
+                            />
+                            <TextFieldGroup
+                                type="password"
+                                placeholder="Confirm Password"
+                                name="password2"
+                                onChange={(e) => setPassword2(e.target.value)}
+                                value={password2}
+                                error={errors.password2}
+                            />
                             <input type="submit" className="btn btn-info btn-block mt-4" />
                         </form>
                     </div>
