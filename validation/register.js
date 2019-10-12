@@ -1,48 +1,26 @@
-const Validator = require('validator');
-const isEmpty = require('./is_empty') ;
+const Joi = require('@hapi/joi');
 
-module.exports = function validateRegisterInput(data){
-    let errors ={};
-    data.name = !isEmpty(data.name) ? data.name : '';
-    data.email = !isEmpty(data.email) ? data.email : '';
-    data.password = !isEmpty(data.password) ? data.password : '';
-    data.password2 = !isEmpty(data.password2) ? data.password2 : '';
-
-    if(!Validator.isLength(data.name,{min:2, max:30})){
-        errors.name = "Name must be between 2 and 30 characters"
-    }
-
-    if(Validator.isEmpty(data.name)){
-        errors.name = "Name field is required"
-    }
-
-    if(Validator.isEmpty(data.email)){
-        errors.email = "Email field is required"
-    }
-
-    if(!Validator.isEmail(data.email)){
-        errors.email = "Email is invalid"
-    }
-
-    if(Validator.isEmpty(data.password)){
-        errors.password = "Password field is required"
-    }
-
-    if(!Validator.isLength(data.password,{min:6, max:30})){
-        errors.password = "Password must be at least 6 characters"
-    }
-
-    if(Validator.isEmpty(data.password2)){
-        errors.password2 = "confirm Password field is required"
-    }
-
-    if(!Validator.equals(data.password, data.password2)){
-        errors.password2 = "Passwords must match"
-    }
-
-
-    return {
-        errors,
-        isValid: isEmpty(errors)
-    }
-}
+module.exports = Joi.object({
+    name: Joi.string().min(3).max(30).required().messages({
+        'string.empty': `Name cannot be an empty field`,
+        'string.min': `Name must be between 2 and 30 characters`,
+        'string.max': `Name must be between 2 and 30 characters`,
+        'any.required': `Name is a required field`
+      }),
+    email: Joi.string().email().required().messages({
+        'string.empty': `Email cannot be an empty field`,
+        'string.email': `Email is invalid`,
+        'any.required': `Email is a required field`
+    }),
+    password:Joi.string().min(6).max(30).required().messages({
+        'string.empty': `Password cannot be an empty field`,
+        'string.min': `Password must be between 6 and 30 characters`,
+        'string.max': `Password must be between 6 and 30 characters`,
+        'any.required': `Password is a required field`
+    }),
+    password2:Joi.string().required().equal(Joi.ref('password'))
+    .messages({
+      'any.required': 'Confirm Password is a required field',
+      'any.only': 'Confirm Password must be equal to Password'
+    })
+});
