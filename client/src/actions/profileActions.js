@@ -5,6 +5,7 @@ import {
   GET_ERRORS,
   PROFILE_LOADING,
   CLEAR_CURRENT_PROFILE,
+  SET_CURRENT_USER,
 } from './types';
 
 export const getCurrentProfile = () => async dispatch => {
@@ -45,4 +46,21 @@ export const clearCurrentProfile = () => {
   return {
     type: CLEAR_CURRENT_PROFILE,
   };
+};
+
+export const deleteAccount = () => async dispatch => {
+  try {
+    if (window.confirm('Are you sure you want to delete your account?')) {
+      let res = await axios.delete('/api/profile');
+      dispatch({
+        type: SET_CURRENT_USER,
+        payload: {},
+      });
+    }
+  } catch (err) {
+    dispatch({
+      type: GET_ERRORS,
+      payload: err.response.data,
+    });
+  }
 };

@@ -8,8 +8,10 @@ const validateProfileInput = require('../../validation/profile');
 const validateExperienceInput = require('../../validation/experience');
 const validateEducationInput = require('../../validation/education');
 const validate = require('../../middleware/errorValidation');
+const showErrors = require('../../validation/error');
 
 const User = require('../../models/User');
+const ProfessionStatus = require('../../models/Profession');
 
 router.get('/test', (req, res) => res.json({msg: 'profile'}));
 
@@ -94,29 +96,46 @@ router.post(
   passport.authenticate('jwt', {session: false}),
   validate(validateProfileInput),
   async (req, res) => {
-    let {bio, company, website, city, province, skills, status} = req.body;
-    const profileFields = {
-      bio,
-      company,
-      website,
-      city,
-      province,
-      skills: skills.split(',') || '',
-      status,
-      user: req.user.id,
-    };
-    let profile = await Profile.findOne({user: req.user.id});
-    if (profile) {
-      profile = await Profile.findOneAndUpdate(
-        {user: req.user.id},
-        {$set: profileFields},
-        {new: true}
-      );
-    } else {
-      profile = new Profile(profileFields);
-      profile = await profile.save();
+    try {
+      let {
+        bio,
+        company,
+        website,
+        city,
+        province,
+        skills,
+        status,
+        username,
+      } = req.body;
+      const profileFields = {
+        username,
+        bio,
+        company,
+        website,
+        city,
+        province,
+        skills: skills.split(',') || '',
+        status,
+        user: req.user.id,
+      };
+      let profile = await Profile.findOne({user: req.user.id});
+      if (profile) {
+        profile = await Profile.findOneAndUpdate(
+          {user: req.user.id},
+          {$set: profileFields},
+          {new: true}
+        );
+      } else {
+        profile = new Profile(profileFields);
+        profile = await profile.save();
+      }
+      res.json(profile);
+    } catch (error) {
+      let {errors} = error;
+      if (errors) {
+        res.status(400).json(showErrors(errors));
+      }
     }
-    res.json(profile);
   }
 );
 
@@ -221,5 +240,12 @@ router.delete(
     }
   }
 );
+
+// router.get('/profession', async (req, res) =>{
+//   let professions = await ProfessionStatus.find();
+//   console.log(professions);
+//   res.json(professions);
+// });
+
 
 module.exports = router;

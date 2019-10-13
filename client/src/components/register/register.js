@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import Proptypes from 'prop-types';
-import TextFieldGroup from '../FormComponents/TextFieldGroup';
+import TextFieldGroup from '../common/TextFieldGroup';
 
 const Register = ({auth, errors, registerUser, history}) => {
   const [name, setName] = useState('');

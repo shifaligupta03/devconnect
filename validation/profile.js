@@ -37,6 +37,12 @@ module.exports = Joi.object({
       'string.empty': `Skills cannot be an empty field`,
       'any.required': `Skills is a required field`,
     }),
+  username: Joi.string()
+    .required()
+    .messages({
+      'string.empty': `Username cannot be an empty field`,
+      'any.required': `Username is a required field`,
+    }),
 });
 
 // const Validator = require('validator');

@@ -33,9 +33,9 @@ router.post('/register', validate(validateRegisterSchema), async (req, res) => {
 router.post('/login', validate(validateLoginInput), async (req, res) => {
   const {email, password} = req.body;
   let user = await User.findOne({email});
-  let isMatch = await bcrypt.compare(password, user.password);
+  let isMatch = (user.password ? await bcrypt.compare(password, user.password) : false);
   if (!user || !isMatch) {
-    errors.email = 'Incorrect username or password';
+    errors.email = 'Incorrect email or password';
     return res.status(404).json(errors);
   }
   const payload = {id: user.id, name: user.name, avatar: user.avatar};

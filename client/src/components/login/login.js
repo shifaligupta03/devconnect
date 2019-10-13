@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import Proptypes from 'prop-types';
-import TextFieldGroup from '../FormComponents/TextFieldGroup';
+import TextFieldGroup from '../common/TextFieldGroup';
 
 const Login = ({auth, errors, loginUser, history}) => {
   const [email, setEmail] = useState('');

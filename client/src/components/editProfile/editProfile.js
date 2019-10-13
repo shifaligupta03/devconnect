@@ -1,47 +1,64 @@
-import React, {useReducer} from 'react';
+import React, {useState, useEffect, useReducer} from 'react';
 import Proptypes from 'prop-types';
 import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import SelectListGroup from '../common/selectListGroup';
-import createProfileReducer from './reducer';
+import editProfileReducer from './reducer';
 import ProfessionOptions from '../common/data/profession';
 
-const createProfile = ({errors, profile, history, createProfile}) => {
-  const initialState = {
-    username: '',
-    company: '',
-    website: '',
-    city: '',
-    province: '',
-    status: '',
-    skills: '',
-    bio: '',
-  };
+const editProfile = ({
+  errors,
+  userProfile: {profile},
+  history,
+  createProfile,
+  getCurrentProfile,
+}) => {
 
-  const [state, dispatch] = useReducer(createProfileReducer, initialState);
+  const [state, dispatch] = useReducer(
+    editProfileReducer,
+    { username: '', company: '', website: '', city: '', province: '', status: '', skills:'', bio:'' }
+  )
 
   let {company, website, city, province, status, skills, bio, username} = state;
+  useEffect(() => {
+    getCurrentProfile();
+    if (profile && profile.username) {
+      console.log(profile);
+      dispatch({
+        type: "edit",
+       payload: profile
+    });
+    }
 
+  }, [profile && profile.username]);
   const handleSubmit = e => {
     e.preventDefault();
-    createProfile({...state}, history);
+    const profileData = {
+      company,
+      website,
+      city,
+      province,
+      status,
+      skills,
+      bio,
+      username,
+    };
   };
 
-  const updateFormInput = e => {
+  const updateFormInput = (e) =>{
     e.preventDefault();
     dispatch({
       type: 'input',
       name: e.target.name,
       value: e.target.value,
-    });
-  };
-
+    })
+  }
   return (
     <div className="create-profile">
       <div className="container">
         <div className="row">
           <div className="col-md-8 m-auto">
-            <div className="display-4 text-center">Create your Profile</div>
+            <div className="display-4 text-center">Edit Profile</div>
             <form onSubmit={handleSubmit}>
               <TextFieldGroup
                 label="Username"
@@ -127,9 +144,11 @@ const createProfile = ({errors, profile, history, createProfile}) => {
   );
 };
 
-export default createProfile;
+export default editProfile;
 
-createProfile.proptypes = {
+editProfile.proptypes = {
+  createProfile: Proptypes.func.isRequired,
+  getCurrentProfile: Proptypes.func.isRequired,
   errors: Proptypes.object.isRequired,
   profile: Proptypes.object.isRequired,
 };

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const uniqueValidator = require('mongoose-unique-validator');
 const Schema = mongoose.Schema;
 
 const ProfileSchema = new Schema({
@@ -26,6 +27,11 @@ const ProfileSchema = new Schema({
     type: [String],
     required: true,
   },
+  username:{
+    type: String,
+    required: true,
+    unique: true
+},
   bio: {
     type: String,
   },
@@ -110,5 +116,7 @@ const ProfileSchema = new Schema({
     default: Date.now(),
   },
 });
+
+ProfileSchema.plugin(uniqueValidator, { message: '{PATH} must be unique' })
 
 module.exports = Profile = mongoose.model('profile', ProfileSchema);
