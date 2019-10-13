@@ -24,6 +24,25 @@ export const getCurrentProfile = () => async dispatch => {
   }
 };
 
+// Get all profiles
+export const getProfiles = () => dispatch => {
+  dispatch(setProfileLoading());
+  axios
+    .get('/api/profile/all')
+    .then(res =>
+      dispatch({
+        type: GET_PROFILES,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_PROFILES,
+        payload: null
+      })
+    );
+};
+
 export const createProfile = (profileData, history) => async dispatch => {
   try {
     let res = await axios.post('/api/profile', profileData);
@@ -46,6 +65,50 @@ export const clearCurrentProfile = () => {
   return {
     type: CLEAR_CURRENT_PROFILE,
   };
+};
+
+export const addExperience = (expData, history) => async dispatch =>{
+  try {
+    let res = await axios.post('/api/profile/experience', expData);
+    history.push('/dashboard');
+  } catch (err) {
+    dispatch({
+      type: GET_ERRORS,
+      payload: err.response.data,
+    });
+  }
+}
+
+export const addEducation = (eduData, history) => async dispatch =>{
+  try {
+    let res = await axios.post('/api/profile/education', eduData);
+    history.push('/dashboard');
+  } catch (err) {
+    dispatch({
+      type: GET_ERRORS,
+      payload: err.response.data,
+    });
+  }
+}
+
+export const deleteExperience = (id) => async dispatch => {
+    if (window.confirm('Are you sure you want to delete your experience?')) {
+      let res = await axios.delete('/api/profile/experience/'+id);
+      dispatch({
+        type: GET_PROFILE,
+        payload: res.data,
+      });
+    }
+};
+
+export const deleteEducation = (id) => async dispatch => {
+  if (window.confirm('Are you sure you want to delete your experience?')) {
+    let res = await axios.delete('/api/profile/education/'+id);
+    dispatch({
+      type: GET_PROFILE,
+      payload: res.data,
+    });
+  }
 };
 
 export const deleteAccount = () => async dispatch => {

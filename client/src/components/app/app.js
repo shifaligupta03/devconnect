@@ -12,8 +12,10 @@ import Footer from '../footer/footer';
 import Register from '../register/register.container';
 import Login from '../login/login.container';
 import Dashboard from '../dashboard/dashboard.container';
-import CreateProfile from '../createProfile/createProfile.container';
-import EditProfile from '../editProfile/editProfile.container';
+import Profile from '../profile/profile.container';
+import Profiles from '../profiles/profiles.container';
+import AddExperience from '../addExperience/add-experience.container';
+import AddEducation from '../addEducation/add-education.container';
 import PrivateRoute from '../privateRoute/privateRoute.container';
 
 if (localStorage.jwtToken) {
@@ -42,8 +44,11 @@ class App extends Component {
               <Route path="/login" component={Login} />
               <Switch>
               <PrivateRoute path="/dashboard" component={Dashboard} />
-              <PrivateRoute path="/create-profile" component={CreateProfile} />
-              <PrivateRoute path="/edit-profile" component={EditProfile} />
+              <PrivateRoute path="/create-profile" component={Profile} />
+              <PrivateRoute path="/edit-profile" component={Profile} />
+              <PrivateRoute path="/add-experience" component={AddExperience} />
+              <PrivateRoute path="/add-education" component={AddEducation} />
+              <Route path="/profiles" component={Profiles} />
               </Switch>
             </div>
             <Footer />

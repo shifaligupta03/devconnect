@@ -22,7 +22,7 @@ const SelectListGroup = ({ name, label, value, error, info, onChange, disabled, 
                 value={value}
                 onChange={onChange}
                 disabled={disabled}
-                required= {false}
+                required= {required}
             >
                 {selectOptions}
             </select>

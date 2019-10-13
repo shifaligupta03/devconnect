@@ -1,4 +1,4 @@
-export default function createProfileReducer(state, action) {
+export default function profileReducer(state, action) {
     switch (action.type) {
       case 'edit':
         const newState = {

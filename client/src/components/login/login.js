@@ -37,7 +37,7 @@ const Login = ({auth, errors, loginUser, history}) => {
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 error={errors.email}
-                required= {true}
+                required={true}
               />
 
               <TextFieldGroup
@@ -47,7 +47,7 @@ const Login = ({auth, errors, loginUser, history}) => {
                 value={password}
                 onChange={e => setPassword(e.target.value)}
                 error={errors.password}
-                required= {true}
+                required={true}
               />
               <input type="submit" className="btn btn-info btn-block mt-4" />
             </form>

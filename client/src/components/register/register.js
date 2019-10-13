@@ -1,29 +1,53 @@
-import React, {useState, useEffect} from 'react';
+import React, {useReducer, useEffect} from 'react';
 import Proptypes from 'prop-types';
 import TextFieldGroup from '../common/TextFieldGroup';
+import registerReducer from './reducer';
 
 const Register = ({auth, errors, registerUser, history}) => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [password2, setPassword2] = useState('');
+  const initialState = {
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  };
+
+  const [state, dispatch] = useReducer(registerReducer, initialState);
+  let {name, email, password, confirmPassword} = state;
+
+  // const [name, setName] = useState('');
+  // const [email, setEmail] = useState('');
+  // const [password, setPassword] = useState('');
+  // const [password2, setPassword2] = useState('');
 
   useEffect(() => {
     if (auth.isAuthenticated) {
       history.push('/dashboard');
     }
   }, []);
+  const updateFormInput = e => {
+    e.preventDefault();
+    dispatch({
+      type: 'input',
+      name: e.target.name,
+      value: e.target.value,
+    });
+  };
 
   const handleSubmit = e => {
     e.preventDefault();
-    const newUser = {
-      name,
-      email,
-      password,
-      password2,
-    };
-    registerUser(newUser, history);
+    registerUser({...state}, history);
   };
+
+  // const handleSubmit = e => {
+  //   e.preventDefault();
+  //   const newUser = {
+  //     name,
+  //     email,
+  //     password,
+  //     confirmPassword,
+  //   };
+  //   registerUser(newUser, history);
+  // };
 
   return (
     <div className="register">
@@ -36,7 +60,7 @@ const Register = ({auth, errors, registerUser, history}) => {
               <TextFieldGroup
                 placeholder="Name"
                 name="name"
-                onChange={e => setName(e.target.value)}
+                onChange={updateFormInput}
                 value={name}
                 error={errors.name}
                 required={true}
@@ -45,7 +69,7 @@ const Register = ({auth, errors, registerUser, history}) => {
                 placeholder="Email Address"
                 name="email"
                 value={email}
-                onChange={e => setEmail(e.target.value)}
+                onChange={updateFormInput}
                 error={errors.email}
                 required={true}
               />
@@ -53,7 +77,7 @@ const Register = ({auth, errors, registerUser, history}) => {
                 type="password"
                 placeholder="Password"
                 name="password"
-                onChange={e => setPassword(e.target.value)}
+                onChange={updateFormInput}
                 value={password}
                 error={errors.password}
                 info="This site uses Gravatar so if you want a profile image, use a Gravatar email"
@@ -62,10 +86,10 @@ const Register = ({auth, errors, registerUser, history}) => {
               <TextFieldGroup
                 type="password"
                 placeholder="Confirm Password"
-                name="password2"
-                onChange={e => setPassword2(e.target.value)}
-                value={password2}
-                error={errors.password2}
+                name="confirmPassword"
+                onChange={updateFormInput}
+                value={confirmPassword}
+                error={errors.confirmPassword}
                 required={true}
               />
               <input type="submit" className="btn btn-info btn-block mt-4" />

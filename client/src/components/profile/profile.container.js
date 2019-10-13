@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import editProfileForm from './editProfile';
+import profileForm from './profile';
 import {createProfile, getCurrentProfile} from '../../actions/profileActions';
 
 function mapStateToProps(state) {
@@ -13,4 +13,4 @@ function mapStateToProps(state) {
 export default connect(
   mapStateToProps,
   {createProfile, getCurrentProfile}
-)(withRouter(editProfileForm));
+)(withRouter(profileForm));

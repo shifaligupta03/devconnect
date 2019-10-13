@@ -17,7 +17,7 @@ const TextFieldGroup = ({ name, placeholder, value, label, error, info, type, on
                 value={value}
                 onChange={onChange}
                 disabled={disabled}
-                required= {false}
+                required= {required}
             />
             {info && <small className="form-text text-muted">{info}</small>}
             {error && (

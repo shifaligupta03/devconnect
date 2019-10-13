@@ -3,6 +3,8 @@ import Proptypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import Spinner from '../common/spinner';
 import ProfileActions from './ProfileActions';
+import Experience from '../showExperience/experience.container';
+import Education from '../showEducation/education.container';
 
 const Dashboard = ({
   getCurrentProfile,
@@ -19,38 +21,32 @@ const Dashboard = ({
   useEffect(() => {
     getCurrentProfile();
   }, []);
-
-  if (profile === null || loading) {
-    dashboardContent = <Spinner />;
-  } else {
-    if (Object.keys(profile).length > 0) {
-      dashboardContent = (
-        <div>
-          <p className="lead text-muted">
-            Welcome{' '}
-            <Link to={`/profile/${profile.username}`}> {user.name} </Link>{' '}
-          </p>
-          <ProfileActions />
-
-          <div style={{marginBottom: '60px'}}>
-            <button onClick={handleDeleteAccount} className="btn btn-danger">
-              Delete My Account
-            </button>
-          </div>
+  dashboardContent =
+    profile === null || loading ? (
+      <Spinner />
+    ) : Object.keys(profile).length > 0 ? (
+      <div>
+        <p className="lead text-muted">
+          Welcome <Link to={`/profile/${profile.username}`}> {user.name} </Link>{' '}
+        </p>
+        <ProfileActions />
+        <Experience experience={profile.experience} />
+        <Education education={profile.education} />
+        <div style={{marginBottom: '60px'}}>
+          <button onClick={handleDeleteAccount} className="btn btn-danger">
+            Delete My Account
+          </button>
         </div>
-      );
-    } else {
-      dashboardContent = (
-        <div>
-          <p>You have not set up a profile, please add some info</p>
-          <Link to="/create-profile" className="btn btn-lg btn-info">
-            {' '}
-            Create Profile
-          </Link>
-        </div>
-      );
-    }
-  }
+      </div>
+    ) : (
+      <div>
+        <p>You have not set up a profile, please add some info</p>
+        <Link to="/create-profile" className="btn btn-lg btn-info">
+          {' '}
+          Create Profile
+        </Link>
+      </div>
+    );
 
   return (
     <div className="dashboard">

@@ -1,4 +1,4 @@
-export default function editProfileReducer(state, action) {
+export default function experienceReducer(state, action) {
   switch (action.type) {
     case 'edit':
       const newState = {
@@ -10,6 +10,11 @@ export default function editProfileReducer(state, action) {
       return {
         ...state,
         [action.name]: action.value,
+      };
+    case 'current':
+      return {
+        ...state,
+        ...action.payload,
       };
   }
 }

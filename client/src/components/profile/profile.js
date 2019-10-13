@@ -1,26 +1,42 @@
-import React, {useReducer} from 'react';
+import React, {useReducer, useEffect} from 'react';
 import Proptypes from 'prop-types';
 import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import SelectListGroup from '../common/selectListGroup';
-import createProfileReducer from './reducer';
+import profileReducer from './reducer';
 import ProfessionOptions from '../common/data/profession';
 
-const createProfile = ({errors, profile, history, createProfile}) => {
+const setProfile = ({
+  errors,
+  userProfile: {profile},
+  history,
+  createProfile,
+  getCurrentProfile,
+}) => {
   const initialState = {
     username: '',
     company: '',
     website: '',
     city: '',
     province: '',
-    status: '',
+    status: ProfessionOptions[0].value || '',
     skills: '',
     bio: '',
   };
-
-  const [state, dispatch] = useReducer(createProfileReducer, initialState);
+  const [state, dispatch] = useReducer(profileReducer, initialState);
 
   let {company, website, city, province, status, skills, bio, username} = state;
+
+  useEffect(() => {
+    getCurrentProfile();
+  }, []);
+
+  useEffect(() => {
+    dispatch({
+      type: 'edit',
+      payload: profile,
+    });
+  }, [profile && profile.username]);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -35,13 +51,12 @@ const createProfile = ({errors, profile, history, createProfile}) => {
       value: e.target.value,
     });
   };
-
   return (
     <div className="create-profile">
       <div className="container">
         <div className="row">
           <div className="col-md-8 m-auto">
-            <div className="display-4 text-center">Create your Profile</div>
+            <div className="display-4 text-center">Profile Settings</div>
             <form onSubmit={handleSubmit}>
               <TextFieldGroup
                 label="Username"
@@ -127,9 +142,11 @@ const createProfile = ({errors, profile, history, createProfile}) => {
   );
 };
 
-export default createProfile;
+export default setProfile;
 
-createProfile.proptypes = {
+setProfile.proptypes = {
+  createProfile: Proptypes.func.isRequired,
+  getCurrentProfile: Proptypes.func.isRequired,
   errors: Proptypes.object.isRequired,
   profile: Proptypes.object.isRequired,
 };
