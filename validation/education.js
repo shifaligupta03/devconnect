@@ -1,28 +1,30 @@
-const Validator = require('validator');
-const isEmpty = require('./is_empty');
+const Joi = require('@hapi/joi');
 
-module.exports = function validateExperienceInput(data) {
-  let errors = {};
-  data.school = !isEmpty(data.school) ? data.school : '';
-  data.degree = !isEmpty(data.degree) ? data.degree : '';
-  data.fieldOfStudy = !isEmpty(data.fieldOfStudy) ? data.fieldOfStudy : '';
-  data.from = !isEmpty(data.from) ? data.from : '';
+module.exports = Joi.object({
+  school: Joi.string()
+    .required()
+    .messages({
+      'string.empty': `School cannot be an empty field`,
+      'any.required': `School is a required field`,
+    }),
 
-  if (Validator.isEmpty(data.school)) {
-    errors.school = 'School is required';
-  }
-  if (Validator.isEmpty(data.degree)) {
-    errors.degree = 'Degree is required';
-  }
-  if (Validator.isEmpty(data.fieldOfStudy)) {
-    errors.fieldOfStudy = 'Field of study is required';
-  }
-  if (Validator.isEmpty(data.from)) {
-    errors.from = 'From date field is required';
-  }
+  degree: Joi.string()
+    .required()
+    .messages({
+      'string.empty': `Degree cannot be an empty field`,
+      'any.required': `Degree is a required field`,
+    }),
 
-  return {
-    errors,
-    isValid: isEmpty(errors),
-  };
-};
+  from: Joi.string()
+    .required()
+    .messages({
+      'string.empty': `From Date cannot be an empty field`,
+      'any.required': `From Date is a required field`,
+    }),
+  fieldOfStudy: Joi.string()
+    .required()
+    .messages({
+      'string.empty': `Field of study cannot be an empty field`,
+      'any.required': `Field of study is a required field`,
+    })
+});

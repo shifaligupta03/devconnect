@@ -1,25 +1,23 @@
-const Validator = require('validator');
-const isEmpty = require('./is_empty') ;
+const Joi = require('@hapi/joi');
 
-module.exports = function validateExperienceInput(data){
-    let errors ={};
-    data.title = !isEmpty(data.title) ? data.title : '';
-    data.company = !isEmpty(data.company) ? data.company : '';
-    data.from = !isEmpty(data.from) ? data.from : '';
+module.exports = Joi.object({
+    title: Joi.string()
+        .required()
+        .messages({
+            'string.empty': `Title cannot be an empty field`,
+            'any.required': `Title is a required field`,
+        }),
 
-    if(Validator.isEmpty(data.email)){
-        errors.title = "Job Title is required"
-    }
-
-    if(Validator.isEmpty(data.company)){
-        errors.company = "Company field is required"
-    }
-    if(Validator.isEmpty(data.from)){
-        errors.from = "From date field is required"
-    }
-
-    return {
-        errors,
-        isValid: isEmpty(errors)
-    }
-}
+    from: Joi.string()
+        .required()
+        .messages({
+            'string.empty': `From Date cannot be an empty field`,
+            'any.required': `From Date is a required field`,
+        }),
+    company: Joi.string()
+        .required()
+        .messages({
+            'string.empty': `Company cannot be an empty field`,
+            'any.required': `Company is a required field`,
+        })
+});

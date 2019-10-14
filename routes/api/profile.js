@@ -13,15 +13,15 @@ const showErrors = require('../../validation/error');
 const User = require('../../models/User');
 const ProfessionStatus = require('../../models/Profession');
 
-router.get('/test', (req, res) => res.json({msg: 'profile'}));
+router.get('/test', (req, res) => res.json({ msg: 'profile' }));
 
 router.get(
   '/',
-  passport.authenticate('jwt', {session: false}),
+  passport.authenticate('jwt', { session: false }),
   async (req, res) => {
     try {
       const errors = {};
-      let profile = await Profile.findOne({user: req.user.id}).populate(
+      let profile = await Profile.findOne({ user: req.user.id }).populate(
         'user',
         ['name', 'avatar']
       );
@@ -39,7 +39,7 @@ router.get(
 router.get('/handle/:handle', async (req, res) => {
   try {
     const errors = {};
-    let profile = await Profile.findOne({handle: req.params.handle}).populate(
+    let profile = await Profile.findOne({ username: req.params.handle }).populate(
       'user',
       ['name', 'avatar']
     );
@@ -57,7 +57,7 @@ router.get('/handle/:handle', async (req, res) => {
 router.get('/user/:user_id', async (req, res) => {
   try {
     const errors = {};
-    let profile = await Profile.findOne({user: req.params.user_id}).populate(
+    let profile = await Profile.findOne({ user: req.params.user_id }).populate(
       'user',
       ['name', 'avatar']
     );
@@ -70,7 +70,7 @@ router.get('/user/:user_id', async (req, res) => {
     console.log(err);
     return res
       .status(404)
-      .json({noprofile: 'There is no profile with this user'});
+      .json({ noprofile: 'There is no profile with this user' });
   }
 });
 
@@ -87,13 +87,13 @@ router.get('/all', async (req, res) => {
     console.log(err);
     return res
       .status(404)
-      .json({noprofile: 'There is no profile with this user'});
+      .json({ noprofile: 'There is no profile with this user' });
   }
 });
 
 router.post(
   '/',
-  passport.authenticate('jwt', {session: false}),
+  passport.authenticate('jwt', { session: false }),
   validate(validateProfileInput),
   async (req, res) => {
     try {
@@ -118,12 +118,12 @@ router.post(
         status,
         user: req.user.id,
       };
-      let profile = await Profile.findOne({user: req.user.id});
+      let profile = await Profile.findOne({ user: req.user.id });
       if (profile) {
         profile = await Profile.findOneAndUpdate(
-          {user: req.user.id},
-          {$set: profileFields},
-          {new: true}
+          { user: req.user.id },
+          { $set: profileFields },
+          { new: true }
         );
       } else {
         profile = new Profile(profileFields);
@@ -131,7 +131,7 @@ router.post(
       }
       res.json(profile);
     } catch (error) {
-      let {errors} = error;
+      let { errors } = error;
       if (errors) {
         res.status(400).json(showErrors(errors));
       }
@@ -141,13 +141,10 @@ router.post(
 
 router.post(
   '/experience',
-  passport.authenticate('jwt', {session: false}),
+  passport.authenticate('jwt', { session: false }),
+  validate(validateExperienceInput),
   async (req, res) => {
-    const {errors, isValid} = validateExperienceInput(req.body);
-    if (!isValid) {
-      return res.status(400).json(errors);
-    }
-    let profile = await Profile.findOne({user: req.user.id});
+    let profile = await Profile.findOne({ user: req.user.id });
     const newExp = {
       title: req.body.title,
       company: req.body.company,
@@ -166,13 +163,10 @@ router.post(
 
 router.post(
   '/education',
-  passport.authenticate('jwt', {session: false}),
+  validate(validateEducationInput),
+  passport.authenticate('jwt', { session: false }),
   async (req, res) => {
-    const {errors, isValid} = validateEducationInput(req.body);
-    if (!isValid) {
-      return res.status(400).json(errors);
-    }
-    let profile = await Profile.findOne({user: req.user.id});
+    let profile = await Profile.findOne({ user: req.user.id });
     const newEdu = {
       school: req.body.school,
       degree: req.body.degree,
@@ -183,7 +177,7 @@ router.post(
       description: req.body.description,
     };
 
-    profile.experience.unshift(newExp);
+    profile.education.unshift(newEdu);
     profile = await profile.save();
     res.json(profile);
   }
@@ -191,10 +185,10 @@ router.post(
 
 router.delete(
   '/experience/:exp_id',
-  passport.authenticate('jwt', {session: false}),
+  passport.authenticate('jwt', { session: false }),
   async (req, res) => {
     try {
-      let profile = await Profile.findOne({user: req.user.id});
+      let profile = await Profile.findOne({ user: req.user.id });
       const removeIndex = profile.experience
         .map(item => item.id)
         .indexOf(req.params.exp_id);
@@ -210,10 +204,10 @@ router.delete(
 
 router.delete(
   '/education/:edu_id',
-  passport.authenticate('jwt', {session: false}),
+  passport.authenticate('jwt', { session: false }),
   async (req, res) => {
     try {
-      let profile = await Profile.findOne({user: req.user.id});
+      let profile = await Profile.findOne({ user: req.user.id });
       const removeIndex = profile.education
         .map(item => item.id)
         .indexOf(req.params.edu_id);
@@ -229,12 +223,12 @@ router.delete(
 
 router.delete(
   '/',
-  passport.authenticate('jwt', {session: false}),
+  passport.authenticate('jwt', { session: false }),
   async (req, res) => {
     try {
-      let profile = await Profile.findOneAndRemove({user: req.user.id});
-      let user = await User.findOneAndRemove({_id: req.user.id});
-      res.json({success: true});
+      let profile = await Profile.findOneAndRemove({ user: req.user.id });
+      let user = await User.findOneAndRemove({ _id: req.user.id });
+      res.json({ success: true });
     } catch (err) {
       res.status(404).json(err);
     }

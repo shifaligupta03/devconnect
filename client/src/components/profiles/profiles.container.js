@@ -4,6 +4,7 @@ import Profiles from './profiles';
 import {getProfiles} from '../../actions/profileActions';
 
 function mapStateToProps(state) {
+  console.log(state);
   return {
     userProfile: state.profile,
   };

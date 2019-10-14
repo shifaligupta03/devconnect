@@ -1,4 +1,5 @@
 module.exports = (schema) => function validate(req, res, next) {
+    console.log(req.body);
     let errors = {}
     const { error } = schema.validate(req.body, { abortEarly: false, allowUnknown: true, errors:{label: 'key'} }); 
     if(error){

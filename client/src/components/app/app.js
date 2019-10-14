@@ -14,6 +14,7 @@ import Login from '../login/login.container';
 import Dashboard from '../dashboard/dashboard.container';
 import Profile from '../profile/profile.container';
 import Profiles from '../profiles/profiles.container';
+import userProfile from '../userProfile/userProfile.container';
 import AddExperience from '../addExperience/add-experience.container';
 import AddEducation from '../addEducation/add-education.container';
 import PrivateRoute from '../privateRoute/privateRoute.container';
@@ -49,6 +50,7 @@ class App extends Component {
               <PrivateRoute path="/add-experience" component={AddExperience} />
               <PrivateRoute path="/add-education" component={AddEducation} />
               <Route path="/profiles" component={Profiles} />
+              <Route path="/profile/:username" component={userProfile} />
               </Switch>
             </div>
             <Footer />
