@@ -31,7 +31,7 @@ const Navbar = ({ auth, logoutUser, clearCurrentProfile, history }) => {
     <ul className="navbar-nav ml-auto">
       <li className="nav-item">
         <Link className="nav-link" to="/register">
-          Register
+          Sign Up
         </Link>
       </li>
       <li className="nav-item">

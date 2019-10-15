@@ -1,35 +1,59 @@
-import React, { useEffect } from 'react';
-// import profileCreds from './profileCreds';
-// import profileHeader from './profileHeader';
-// import profileAbout from './profileAbout';
+import React, {useEffect} from 'react';
+import {Link} from 'react-router-dom';
 import Proptypes from 'prop-types';
 import Spinner from '../common/spinner';
 import ProfileHeader from './profileHeader';
 import ProfileAbout from './profileAbout';
 import ProfileCreds from './profileCreds';
 
+const userProfile = ({
+  getProfileByUsername,
+  userProfile: {profile, loading},
+  ...rest
+}) => {
+  const {username} = rest.match.params;
+  useEffect(() => {
+    if (username) {
+      getProfileByUsername(username);
+    }
+  }, []);
 
-const userProfile = ({ getProfileByUsername, ...rest }) => {
-    const { username } = rest.match.params;
-    console.log(rest);
-    //console.log(rest.match.params.handle)
-
-    useEffect(() => {
-        if (username) {
-            getProfileByUsername(username);
-        }
-    }, []);
-    return (
-        <div>
-           <ProfileHeader />
-           <ProfileAbout />
-           <ProfileCreds />
+  let profileContent =
+    !profile || loading ? (
+      <Spinner />
+    ) : (
+      <div>
+        <div className="row">
+          <div className="col-md-6">
+            <Link to="/profiles" className="btn btn-light mb-3 float-left">
+              Back To Profiles
+            </Link>
+          </div>
+          <div className="col-md-6" />
         </div>
-    )
-}
+        <ProfileHeader profile={profile} />
+        <ProfileAbout profile={profile} />
+        <ProfileCreds
+          education={profile.education}
+          experience={profile.experience}
+        />
+      </div>
+    );
+
+  return (
+    <div className="profile">
+      <div className="container">
+        <div className="row">
+          <div className="col-md-12">{profileContent}</div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default userProfile;
 
 userProfile.proptypes = {
-    getProfileByUsername: Proptypes.func.isRequired,
+  getProfileByUsername: Proptypes.func.isRequired,
+  userProfile: Proptypes.object.isRequired,
 };

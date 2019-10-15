@@ -27,12 +27,24 @@ const ProfileSchema = new Schema({
     type: [String],
     required: true,
   },
-  username:{
+  username: {
     type: String,
     required: true,
-    unique: true
-},
+    unique: true,
+  },
   bio: {
+    type: String,
+  },
+  industryType: {
+    type: String,
+  },
+  companySize: {
+    type: String,
+  },
+  headquarters: {
+    type: String,
+  },
+  founded: {
     type: String,
   },
   experience: [
@@ -117,6 +129,6 @@ const ProfileSchema = new Schema({
   },
 });
 
-ProfileSchema.plugin(uniqueValidator, { message: '{PATH} must be unique' })
+ProfileSchema.plugin(uniqueValidator, {message: '{PATH} must be unique'});
 
 module.exports = Profile = mongoose.model('profile', ProfileSchema);

@@ -18,9 +18,14 @@ module.exports = Joi.object({
         'string.max': `Password must be between 6 and 30 characters`,
         'any.required': `Password is a required field`
     }),
-    password2:Joi.string().required().equal(Joi.ref('password'))
+    confirmPassword:Joi.string().required().equal(Joi.ref('password'))
     .messages({
       'any.required': 'Confirm Password is a required field',
       'any.only': 'Confirm Password must be equal to Password'
+    }),
+    role:Joi.string().required()
+    .messages({
+      'any.required': 'Role is a required field',
     })
+
 });

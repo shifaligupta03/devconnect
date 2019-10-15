@@ -2,22 +2,24 @@ import React, {useReducer, useEffect} from 'react';
 import Proptypes from 'prop-types';
 import TextFieldGroup from '../common/TextFieldGroup';
 import registerReducer from './reducer';
+import SelectListGroup from '../common/selectListGroup';
+
 
 const Register = ({auth, errors, registerUser, history}) => {
+  const RoleOptions = [
+    {label: 'Employee', value: 'Employee'},
+    {label: 'Employer', value: 'Employer'},
+  ]
   const initialState = {
     name: '',
     email: '',
     password: '',
     confirmPassword: '',
+    role: RoleOptions[0].value || '',
   };
 
   const [state, dispatch] = useReducer(registerReducer, initialState);
-  let {name, email, password, confirmPassword} = state;
-
-  // const [name, setName] = useState('');
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
-  // const [password2, setPassword2] = useState('');
+  let {name, email, password, confirmPassword, role} = state;
 
   useEffect(() => {
     if (auth.isAuthenticated) {
@@ -38,23 +40,12 @@ const Register = ({auth, errors, registerUser, history}) => {
     registerUser({...state}, history);
   };
 
-  // const handleSubmit = e => {
-  //   e.preventDefault();
-  //   const newUser = {
-  //     name,
-  //     email,
-  //     password,
-  //     confirmPassword,
-  //   };
-  //   registerUser(newUser, history);
-  // };
-
   return (
     <div className="register">
       <div className="container">
         <div className="row">
           <div className="col-md-8 m-auto">
-            <h1 className="display-4 text-center">Register</h1>
+            <h1 className="display-4 text-center">Sign Up</h1>
             <p className="lead text-center">Create your DevConnect account</p>
             <form onSubmit={handleSubmit}>
               <TextFieldGroup
@@ -90,6 +81,16 @@ const Register = ({auth, errors, registerUser, history}) => {
                 onChange={updateFormInput}
                 value={confirmPassword}
                 error={errors.confirmPassword}
+                required={true}
+              />
+               <SelectListGroup
+                label="Select your Role"
+                placeholder=""
+                name="role"
+                value={role}
+                onChange={updateFormInput}
+                options={RoleOptions}
+                error={errors.role}
                 required={true}
               />
               <input type="submit" className="btn btn-info btn-block mt-4" />

@@ -5,6 +5,7 @@ import {createProfile, getCurrentProfile} from '../../actions/profileActions';
 
 function mapStateToProps(state) {
   return {
+    auth: state.auth,
     userProfile: state.profile,
     errors: state.errors,
   };

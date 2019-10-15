@@ -9,10 +9,26 @@ import ProfessionOptions from '../common/data/profession';
 const setProfile = ({
   errors,
   userProfile: {profile},
+  auth: {
+    user: {role},
+  },
   history,
   createProfile,
   getCurrentProfile,
 }) => {
+  const IndustryTypeOptions = [
+    {label: 'Information Services', value: 'Information Services'},
+    {label: 'Marketing and Sales', value: 'Marketing and Sales'},
+    {label: 'Gaming', value: 'Gaming'},
+  ];
+
+  const CompanySizeOptions = [
+    {label: '1-50', value: 'lessThanFifty'},
+    {label: '50-200', value: 'lessThanTwoHunderd'},
+    {label: '200-500', value: 'lessThanFiveHundred'},
+    {label: '500-1000', value: 'lessThanThousand'},
+    {label: '+1000', value: 'greaterThanThousand'},
+  ];
   const initialState = {
     username: '',
     company: '',
@@ -20,12 +36,29 @@ const setProfile = ({
     city: '',
     province: '',
     status: ProfessionOptions[0].value || '',
+    industryType: IndustryTypeOptions[0].value || '',
+    companySize: CompanySizeOptions[0].value || '',
     skills: '',
     bio: '',
+    headquarters: '',
+    founded: '',
   };
   const [state, dispatch] = useReducer(profileReducer, initialState);
 
-  let {company, website, city, province, status, skills, bio, username} = state;
+  let {
+    company,
+    website,
+    city,
+    province,
+    status,
+    skills,
+    bio,
+    username,
+    industryType,
+    companySize,
+    headquarters,
+    founded,
+  } = state;
 
   useEffect(() => {
     getCurrentProfile();
@@ -40,7 +73,8 @@ const setProfile = ({
 
   const handleSubmit = e => {
     e.preventDefault();
-    createProfile({...state}, history);
+    // console.log(newState);
+    createProfile({role, ...state}, history);
   };
 
   const updateFormInput = e => {
@@ -51,6 +85,105 @@ const setProfile = ({
       value: e.target.value,
     });
   };
+
+  const companyProfile = (
+    <React.Fragment>
+      <SelectListGroup
+        label="Industry Type"
+        placeholder=""
+        name="industryType"
+        value={industryType}
+        onChange={updateFormInput}
+        options={IndustryTypeOptions}
+        error={errors.industryType}
+        required={true}
+      />
+
+      <SelectListGroup
+        label="Select Company Size"
+        placeholder=""
+        name="companySize"
+        value={companySize}
+        onChange={updateFormInput}
+        options={CompanySizeOptions}
+        error={errors.companySize}
+        required={true}
+      />
+      <TextFieldGroup
+        label="Headquarters"
+        placeholder=""
+        name="headquarters"
+        value={headquarters}
+        onChange={updateFormInput}
+        error={errors.headquarters}
+        required={true}
+      />
+
+      <TextFieldGroup
+        label="Founded in"
+        name="founded"
+        type="date"
+        value={founded}
+        onChange={updateFormInput}
+        error={errors.founded}
+        required={true}
+      />
+
+     
+    </React.Fragment>
+  );
+
+  const userProfile = (
+    <React.Fragment>
+      <SelectListGroup
+        label="Professional Status"
+        placeholder="Status"
+        name="status"
+        value={status}
+        onChange={updateFormInput}
+        options={ProfessionOptions}
+        error={errors.status}
+        required={true}
+      />
+
+      <TextFieldGroup
+        label="Company"
+        placeholder="Company"
+        name="company"
+        value={company}
+        onChange={updateFormInput}
+        error={errors.company}
+        required={true}
+      />
+      <TextFieldGroup
+        label="City"
+        name="city"
+        value={city}
+        onChange={updateFormInput}
+        error={errors.city}
+        required={true}
+      />
+      <TextFieldGroup
+        label="Province"
+        name="province"
+        value={province}
+        onChange={updateFormInput}
+        error={errors.province}
+        required={true}
+      />
+      <TextFieldGroup
+        label="Skills"
+        name="skills"
+        value={skills}
+        onChange={updateFormInput}
+        error={errors.skills}
+        required={true}
+        info="Please use comma separated values (eg.
+                    HTML,CSS,JavaScript,PHP"
+      />
+    </React.Fragment>
+  );
+
   return (
     <div className="create-profile">
       <div className="container">
@@ -76,26 +209,6 @@ const setProfile = ({
                 error={errors.bio}
                 required={true}
               />
-              <SelectListGroup
-                label="Professional Status"
-                placeholder="Status"
-                name="status"
-                value={status}
-                onChange={updateFormInput}
-                options={ProfessionOptions}
-                error={errors.status}
-                required={true}
-              />
-
-              <TextFieldGroup
-                label="Company"
-                placeholder="Company"
-                name="company"
-                value={company}
-                onChange={updateFormInput}
-                error={errors.company}
-                required={true}
-              />
               <TextFieldGroup
                 label="Website"
                 name="website"
@@ -103,32 +216,7 @@ const setProfile = ({
                 onChange={updateFormInput}
                 error={errors.website}
               />
-              <TextFieldGroup
-                label="City"
-                name="city"
-                value={city}
-                onChange={updateFormInput}
-                error={errors.city}
-                required={true}
-              />
-              <TextFieldGroup
-                label="Province"
-                name="province"
-                value={province}
-                onChange={updateFormInput}
-                error={errors.province}
-                required={true}
-              />
-              <TextFieldGroup
-                label="Skills"
-                name="skills"
-                value={skills}
-                onChange={updateFormInput}
-                error={errors.skills}
-                required={true}
-                info="Please use comma separated values (eg.
-                    HTML,CSS,JavaScript,PHP"
-              />
+              {role == 'Employer' ? companyProfile : userProfile}
               <input
                 type="submit"
                 value="Submit"

@@ -14,9 +14,9 @@ const showErrors = require('../../validation/error');
 
 router.post('/register', validate(validateRegisterSchema), async (req, res) => {
   try {
-    let {name, email, password} = req.body;
+    let {name, email, password, role} = req.body;
     let avatar = gravatar.url(email, {s: '200', r: 'pg', d: 'mm'});
-    const newUser = new User({name, email, avatar, password});
+    const newUser = new User({name, email, avatar, password, role});
     const salt = await bcrypt.genSalt(saltRounds);
     const hash = await bcrypt.hash(password, salt);
     newUser.password = hash;
@@ -38,7 +38,7 @@ router.post('/login', validate(validateLoginInput), async (req, res) => {
     errors.email = 'Incorrect email or password';
     return res.status(404).json(errors);
   }
-  const payload = {id: user.id, name: user.name, avatar: user.avatar};
+  const payload = {id: user.id, name: user.name, avatar: user.avatar, role: user.role};
   const token = await jwt.sign(payload, keys.jwtSecret, {expiresIn: 3600});
   res.json({success: true, token: 'Bearer ' + token});
 });
@@ -47,7 +47,7 @@ router.get(
   '/current',
   passport.authenticate('jwt', {session: false}),
   (req, res) => {
-    res.json({id: req.user.id, name: req.user.name, email: req.user.email});
+    res.json({id: req.user.id, name: req.user.name, email: req.user.email, role: req.user.role});
   }
 );
 
