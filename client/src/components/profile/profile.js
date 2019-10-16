@@ -23,11 +23,11 @@ const setProfile = ({
   ];
 
   const CompanySizeOptions = [
-    {label: '1-50', value: 'lessThanFifty'},
-    {label: '50-200', value: 'lessThanTwoHunderd'},
-    {label: '200-500', value: 'lessThanFiveHundred'},
-    {label: '500-1000', value: 'lessThanThousand'},
-    {label: '+1000', value: 'greaterThanThousand'},
+    {label: '1-50', value: '1-50'},
+    {label: '50-200', value: '50-200'},
+    {label: '200-500', value: '200-500'},
+    {label: '500-1000', value: '500-1000'},
+    {label: '+1000', value: '1000+'},
   ];
   const initialState = {
     username: '',

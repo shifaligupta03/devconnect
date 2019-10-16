@@ -1,22 +1,48 @@
-import React from 'react';
-import Proptypes from 'prop-types';
+import React from "react";
+import Proptypes from "prop-types";
 
 const ProfileAbout = ({
   profile: {
     skills,
     bio,
-    user: {name},
-  },
+    headquarters,
+    companySize,
+    founded,
+    role,
+    user: { name }
+  }
 }) => {
-  // Get first name
-  const firstName = name.trim().split(' ')[0];
+  const firstName = name.trim().split(" ")[0];
 
-  // Skill List
   const UserSkills = skills.map((skill, index) => (
     <div key={index} className="p-3">
       <i className="fa fa-check" /> {skill}
     </div>
   ));
+  const companyAbout = (
+    <React.Fragment>
+      <h3 className="text-center text-info">About Us</h3>
+      <div className="row">
+        <p className="lead text-center">Headquarters in {headquarters}</p>
+      </div>
+      <div className="row">
+        <p className="lead text-center">Company Size is {companySize}</p>
+      </div>
+      <div className="row">
+        <p className="lead text-center">Founded in {founded}</p>
+      </div>
+    </React.Fragment>
+  );
+  const employeeAbout = (
+    <React.Fragment>
+      <h3 className="text-center text-info">Skill Set</h3>
+      <div className="row">
+        <div className="d-flex flex-wrap justify-content-center align-items-center">
+          {UserSkills}
+        </div>
+      </div>
+    </React.Fragment>
+  );
   return (
     <div className="row">
       <div className="col-md-12">
@@ -30,19 +56,14 @@ const ProfileAbout = ({
             )}
           </p>
           <hr />
-          <h3 className="text-center text-info">Skill Set</h3>
-          <div className="row">
-            <div className="d-flex flex-wrap justify-content-center align-items-center">
-              {UserSkills}
-            </div>
-          </div>
+          {role === "Employer" ? companyAbout : employeeAbout}
         </div>
       </div>
     </div>
   );
 };
 ProfileAbout.proptypes = {
-  profile: Proptypes.object.isRequired,
+  profile: Proptypes.object.isRequired
 };
 
 export default ProfileAbout;

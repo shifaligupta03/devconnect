@@ -110,6 +110,7 @@ router.post(
         companySize,
         headquarters,
         founded,
+        role
       } = req.body;
       const profileFields = {
         username,
@@ -125,6 +126,7 @@ router.post(
         companySize,
         headquarters,
         founded,
+        role
       };
       let profile = await Profile.findOne({user: req.user.id});
       if (profile) {

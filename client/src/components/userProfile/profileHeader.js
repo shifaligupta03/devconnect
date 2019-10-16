@@ -4,9 +4,11 @@ import Proptypes from 'prop-types';
 const ProfileHeader = ({
   profile: {
     status,
-    location,
+    city,
     company,
     website,
+    role,
+    industryType,
     user: {name, avatar},
   },
 }) => (
@@ -21,9 +23,10 @@ const ProfileHeader = ({
         <div className="text-center">
           <h1 className="display-4 text-center">{name}</h1>
           <p className="lead text-center">
-            {status} {company ? <span>at {company}</span> : null}
+            {role == "Employer" ? industryType : status} 
+            {company ? <span>at {company}</span> : null}
           </p>
-          {location ? <p>{location}</p> : null}
+          {city ? <p>{city}</p> : null}
           <p>
             {website ? (
               <a className="text-white p-2" href={website} target="_blank">

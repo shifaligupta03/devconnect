@@ -47,6 +47,9 @@ const ProfileSchema = new Schema({
   founded: {
     type: String,
   },
+  role: {
+    type: String,
+  },
   experience: [
     {
       title: {

@@ -110,4 +110,9 @@ module.exports = Joi.object({
       'string.empty': `Founded cannot be an empty field`,
       'any.required': `Founded is a required field`,
     }),
+    role: Joi.string()
+    .required()
+    .messages({
+      'any.required': `Role is a required field`,
+    }),
 });
