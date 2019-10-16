@@ -7,7 +7,9 @@ const Profile = require('../../models/Profile');
 const validateProfileInput = require('../../validation/profile');
 const validateExperienceInput = require('../../validation/experience');
 const validateEducationInput = require('../../validation/education');
+const validateConnectionInput = require('../../validation/connection');
 const validate = require('../../middleware/errorValidation');
+const getUser = require('../../middleware/getUser');
 const showErrors = require('../../validation/error');
 
 const User = require('../../models/User');
@@ -74,8 +76,9 @@ router.get('/user/:user_id', async (req, res) => {
   }
 });
 
-router.get('/all', async (req, res) => {
+router.get('/all', getUser, async (req, res) => {
   try {
+    // let loggedInUser = req.user ||'';
     const errors = {};
     let profile = await Profile.find().populate('user', ['name', 'avatar']);
     if (!profile) {
@@ -110,7 +113,7 @@ router.post(
         companySize,
         headquarters,
         founded,
-        role
+        role,
       } = req.body;
       const profileFields = {
         username,
@@ -126,7 +129,7 @@ router.post(
         companySize,
         headquarters,
         founded,
-        role
+        role,
       };
       let profile = await Profile.findOne({user: req.user.id});
       if (profile) {
@@ -242,6 +245,27 @@ router.delete(
     } catch (err) {
       res.status(404).json(err);
     }
+  }
+);
+
+router.post(
+  '/sendConnectionRequest',
+  validate(validateConnectionInput),
+  passport.authenticate('jwt', {session: false}),
+  async (req, res) => {
+
+    // const errors = {};
+    // let profile = await Profile.findOne({username: req.params.handle}).populate(
+    //   'user',
+    //   ['name', 'avatar']
+    // );
+    let user = await User.findById(req.body.connectionId);
+
+    (user.requests.indexOf(req.body.connectorId)<0 ?
+    user.requests.push(req.body.connectorId) : null);
+    user = await user.save();
+    let {id, name, email, role, requests, connections} = user;
+    res.json({id, name, email, role, requests, connections});
   }
 );
 

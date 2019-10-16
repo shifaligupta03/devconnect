@@ -65,7 +65,9 @@ router.get(
       id: req.user.id,
       name: req.user.name,
       email: req.user.email,
-      role: req.user.role
+      role: req.user.role,
+      requests: req.user.requests,
+      connections: req.user.connections,
     });
   }
 );

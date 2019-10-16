@@ -5,12 +5,13 @@ import ProfileItem from './profileItems';
 
 const Profiles = ({
   userProfile: { profiles, loading },
+  auth,
   getProfiles,
 }) => {
   useEffect(() => {
     getProfiles();
   }, []);
-
+  
   let profileItems = ((!profiles || loading) ? <Spinner /> : ((profiles.length > 0) ? (profiles.map(profile => (
     <ProfileItem key={profile._id} profile={profile} />
   ))) : <h4>No Profiles Found</h4>))

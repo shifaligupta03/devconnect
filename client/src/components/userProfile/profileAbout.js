@@ -3,13 +3,13 @@ import Proptypes from "prop-types";
 
 const ProfileAbout = ({
   profile: {
-    skills,
-    bio,
-    headquarters,
-    companySize,
-    founded,
-    role,
-    user: { name }
+    skills=[],
+    bio="",
+    headquarters="",
+    companySize="",
+    founded="",
+    role="",
+    user: { name ="" } ={}
   }
 }) => {
   const firstName = name.trim().split(" ")[0];

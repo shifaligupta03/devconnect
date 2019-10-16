@@ -149,15 +149,14 @@ export const deleteAccount = () => async dispatch => {
 };
 
 
-export const connectUser = () => async dispatch => {
+export const sendConnectRequest = (connectorId, connectionId) => async dispatch => {
+  // console.log({connectorId, connectionId});
   try {
-    if (window.confirm('Are you sure you want to delete your account?')) {
-      let res = await axios.delete('/api/profile');
+      let res = await axios.post('/api/profile/sendConnectionRequest',{connectorId, connectionId});
       dispatch({
-        type: SET_CURRENT_USER,
-        payload: {},
+        type: SEND_CONNECT_REQUEST,
+        payload: res.data,
       });
-    }
   } catch (err) {
     dispatch({
       type: GET_ERRORS,

@@ -26,6 +26,8 @@ const UserSchema = new Schema({
     role:{
         type: String,
     },
+    requests:[String],
+    connections:[String]
 
 });
 

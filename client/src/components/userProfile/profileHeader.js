@@ -9,9 +9,13 @@ const ProfileHeader = ({
     website,
     role,
     industryType,
-    user: { name, avatar }
-  }
-}) => (
+    user:{ _id='', name="", avatar="" }={}
+  },
+  sendConnectRequest,
+  connectorId
+}) => {
+  console.log(connectorId);
+  return(
   <div className="row">
     <div className="col-md-12">
       <div className="card card-body bg-info text-white mb-3">
@@ -35,7 +39,7 @@ const ProfileHeader = ({
             ) : null}
           </p>
           <button
-            onClick={e => console.log("Follow")}
+            onClick={e =>sendConnectRequest(connectorId, _id)}
             className="btn btn-primary"
           >
             Connect
@@ -44,7 +48,7 @@ const ProfileHeader = ({
       </div>
     </div>
   </div>
-);
+)};
 
 ProfileHeader.proptypes = {
   profile: Proptypes.object.isRequired

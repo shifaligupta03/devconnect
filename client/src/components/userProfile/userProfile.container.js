@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import userProfile from './userProfile';
-import { getProfileByUsername } from '../../actions/profileActions';
+import { getProfileByUsername, sendConnectRequest } from '../../actions/profileActions';
 
 function mapStateToProps(state) {
   console.log(state);
@@ -13,5 +13,5 @@ function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps,
-  { getProfileByUsername }
+  { getProfileByUsername, sendConnectRequest }
 )(withRouter(userProfile));

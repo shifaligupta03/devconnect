@@ -1,24 +1,27 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
-import Proptypes from "prop-types";
-import Spinner from "../common/spinner";
-import ProfileHeader from "./profileHeader";
-import ProfileAbout from "./profileAbout";
-import ProfileCreds from "./profileCreds";
+import React, {useEffect} from 'react';
+import {Link} from 'react-router-dom';
+import Proptypes from 'prop-types';
+import Spinner from '../common/spinner';
+import ProfileHeader from './profileHeader';
+import ProfileAbout from './profileAbout';
+import ProfileCreds from './profileCreds';
 
 const userProfile = ({
+  sendConnectRequest,
   getProfileByUsername,
-  userProfile: { profile, loading },
-  auth,
+  userProfile: {profile, loading},
+  auth: {
+    user: {id},
+  },
   ...rest
 }) => {
-  const { username } = rest.match.params;
+  // console.log({profile});
+  const {username} = rest.match.params;
   useEffect(() => {
     if (username) {
       getProfileByUsername(username);
     }
   }, []);
-
   let profileContent =
     !profile || loading ? (
       <Spinner />
@@ -32,9 +35,13 @@ const userProfile = ({
           </div>
           <div className="col-md-6" />
         </div>
-        <ProfileHeader profile={profile} />
+        <ProfileHeader
+          profile={profile}
+          connectorId={id}
+          sendConnectRequest={sendConnectRequest}
+        />
         <ProfileAbout profile={profile} />
-        {profile.role === "Employee" ? (
+        {profile.role === 'Employee' ? (
           <ProfileCreds
             education={profile.education}
             experience={profile.experience}
@@ -58,5 +65,5 @@ export default userProfile;
 
 userProfile.proptypes = {
   getProfileByUsername: Proptypes.func.isRequired,
-  userProfile: Proptypes.object.isRequired
+  userProfile: Proptypes.object.isRequired,
 };
