@@ -1,6 +1,6 @@
-import React from 'react';
-import Proptypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import React from "react";
+import Proptypes from "prop-types";
+import { Link } from "react-router-dom";
 
 const Navbar = ({ auth, logoutUser, clearCurrentProfile, history }) => {
   const { isAuthenticated, user } = auth;
@@ -17,7 +17,7 @@ const Navbar = ({ auth, logoutUser, clearCurrentProfile, history }) => {
         >
           <img
             className="rounded-circle"
-            style={{ width: '25px', marginRight: '5px' }}
+            style={{ width: "25px", marginRight: "5px" }}
             src={user.avatar}
             alt={user.name}
           />
@@ -42,14 +42,13 @@ const Navbar = ({ auth, logoutUser, clearCurrentProfile, history }) => {
     </ul>
   );
 
-
   return (
     <div>
       <nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
         <div className="container">
-          <a className="navbar-brand" href="landing.html">
+          <Link to="/" className="navbar-brand">
             DevConnect
-          </a>
+          </Link>
           <button
             className="navbar-toggler"
             type="button"
@@ -61,8 +60,10 @@ const Navbar = ({ auth, logoutUser, clearCurrentProfile, history }) => {
           <div className="collapse navbar-collapse" id="mobile-nav">
             <ul className="navbar-nav mr-auto">
               <li className="nav-item">
-                <Link to="/profiles" className="nav-link"> {' '}
-                  Developers</Link>
+                <Link to="/profiles" className="nav-link">
+                  {" "}
+                  Developers
+                </Link>
               </li>
             </ul>
 
@@ -72,12 +73,12 @@ const Navbar = ({ auth, logoutUser, clearCurrentProfile, history }) => {
       </nav>
     </div>
   );
-}
+};
 
 export default Navbar;
 
 Navbar.proptypes = {
   logoutUser: Proptypes.func.isRequired,
   clearCurrentProfile: Proptypes.func.isRequired,
-  auth: Proptypes.object.isRequired,
+  auth: Proptypes.object.isRequired
 };

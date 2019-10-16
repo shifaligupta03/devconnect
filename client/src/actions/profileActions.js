@@ -6,6 +6,7 @@ import {
   PROFILE_LOADING,
   CLEAR_CURRENT_PROFILE,
   SET_CURRENT_USER,
+  SEND_CONNECT_REQUEST,
 } from './types';
 
 export const getCurrentProfile = () => async dispatch => {
@@ -131,6 +132,24 @@ export const deleteEducation = (id) => async dispatch => {
 };
 
 export const deleteAccount = () => async dispatch => {
+  try {
+    if (window.confirm('Are you sure you want to delete your account?')) {
+      let res = await axios.delete('/api/profile');
+      dispatch({
+        type: SET_CURRENT_USER,
+        payload: {},
+      });
+    }
+  } catch (err) {
+    dispatch({
+      type: GET_ERRORS,
+      payload: err.response.data,
+    });
+  }
+};
+
+
+export const connectUser = () => async dispatch => {
   try {
     if (window.confirm('Are you sure you want to delete your account?')) {
       let res = await axios.delete('/api/profile');

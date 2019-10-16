@@ -6,6 +6,7 @@ import { getProfileByUsername } from '../../actions/profileActions';
 function mapStateToProps(state) {
   console.log(state);
   return {
+    auth: state.auth,
     userProfile: state.profile,
   };
 }

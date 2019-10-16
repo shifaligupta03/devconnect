@@ -1,5 +1,5 @@
-import React from 'react';
-import Proptypes from 'prop-types';
+import React from "react";
+import Proptypes from "prop-types";
 
 const ProfileHeader = ({
   profile: {
@@ -9,8 +9,8 @@ const ProfileHeader = ({
     website,
     role,
     industryType,
-    user: {name, avatar},
-  },
+    user: { name, avatar }
+  }
 }) => (
   <div className="row">
     <div className="col-md-12">
@@ -23,7 +23,7 @@ const ProfileHeader = ({
         <div className="text-center">
           <h1 className="display-4 text-center">{name}</h1>
           <p className="lead text-center">
-            {role == "Employer" ? industryType : status} 
+            {role == "Employer" ? industryType : status}
             {company ? <span>at {company}</span> : null}
           </p>
           {city ? <p>{city}</p> : null}
@@ -34,6 +34,12 @@ const ProfileHeader = ({
               </a>
             ) : null}
           </p>
+          <button
+            onClick={e => console.log("Follow")}
+            className="btn btn-primary"
+          >
+            Connect
+          </button>
         </div>
       </div>
     </div>
@@ -41,7 +47,7 @@ const ProfileHeader = ({
 );
 
 ProfileHeader.proptypes = {
-  profile: Proptypes.object.isRequired,
+  profile: Proptypes.object.isRequired
 };
 
 export default ProfileHeader;

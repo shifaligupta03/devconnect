@@ -9,6 +9,7 @@ import ProfileCreds from "./profileCreds";
 const userProfile = ({
   getProfileByUsername,
   userProfile: { profile, loading },
+  auth,
   ...rest
 }) => {
   const { username } = rest.match.params;
@@ -33,7 +34,7 @@ const userProfile = ({
         </div>
         <ProfileHeader profile={profile} />
         <ProfileAbout profile={profile} />
-        {profile.role === "Employer" ? (
+        {profile.role === "Employee" ? (
           <ProfileCreds
             education={profile.education}
             experience={profile.experience}
