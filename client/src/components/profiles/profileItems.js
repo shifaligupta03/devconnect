@@ -17,10 +17,10 @@ const ProfileItem = ({ profile }) => {
   return (
     <div className="card card-body bg-light mb-3">
       <div className="row">
-        <div className="col-2">
+        <div className="col-3">
           <img src={avatar} alt="" className="rounded-circle" />
         </div>
-        <div className="col-lg-6 col-md-4 col-8">
+        <div className="col-lg-5 col-md-4 col-8">
           <h3>{name}</h3>
           <p>
             {role == "Employer" ? industryType : status}

@@ -6,6 +6,11 @@ const Navbar = ({ auth, logoutUser, clearCurrentProfile, history, profile:{ user
   const { isAuthenticated, user } = auth;
   const authLinks = (
     <ul className="navbar-nav ml-auto">
+       <li className="nav-item">
+        <Link className="nav-link" to="/feed">
+          Posts Feed
+        </Link>
+      </li>
       <li className="nav-item">
         <Link className="nav-link" to={`/profile/${username}`}>
           {username}

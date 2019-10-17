@@ -55,12 +55,12 @@ router.delete(
     try {
       let profile = await Profile.findOne({user: req.user.id});
       let post = await Post.findById(req.params.id);
-      if (post.user !== req.user.id) {
-        return res.status(401).json({notAuthorized: 'User not Authorized'});
+      let jsonRes = {notAuthorized: 'User not Authorized'};
+      if(post.user==req.user.id) {
+        await post.remove();
+        jsonRes = {success: true};
       }
-
-      await post.remove();
-      res.json({success: true});
+      res.json(jsonRes);
     } catch (err) {
       res.status(404).json({nopostfound: 'No Post found'});
     }
@@ -110,9 +110,8 @@ router.post(
       let removeIndex = post.likes
         .map(item => item.user.toString())
         .indexOf(req.user.id);
-
-      post.likes.splice(removeIndex, 1);
-      post.likes.unshift({user: req.user.id});
+      await post.likes.splice(removeIndex, 1);
+      // await post.likes.unshift({user: req.user.id});
       post = await post.save();
       res.json(post);
     } catch (err) {
