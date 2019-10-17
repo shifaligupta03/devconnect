@@ -15,7 +15,6 @@ const userProfile = ({
   },
   ...rest
 }) => {
-  // console.log({profile});
   const {username} = rest.match.params;
   useEffect(() => {
     if (username) {

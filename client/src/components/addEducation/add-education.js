@@ -31,7 +31,6 @@ const addEducation = ({errors, profile, history, addEducation}) => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log('submit');
     addEducation({...state}, history);
   };
 

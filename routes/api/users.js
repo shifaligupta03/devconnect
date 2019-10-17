@@ -37,7 +37,6 @@ router.post("/login", validate(validateLoginInput), async (req, res) => {
     let isMatch = user.password
       ? await bcrypt.compare(password, user.password)
       : false;
-      console.log({user, isMatch})
     if (!user || !isMatch) {
       return res.status(404).json({email:"Incorrect email or password"});
     }

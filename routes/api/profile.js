@@ -43,7 +43,7 @@ router.get('/handle/:handle', async (req, res) => {
     const errors = {};
     let profile = await Profile.findOne({username: req.params.handle}).populate(
       'user',
-      ['name', 'avatar']
+      ['name', 'avatar', 'requests','connections']
     );
     if (!profile) {
       errors.noprofile = 'There is no profile for this user';
@@ -268,11 +268,5 @@ router.post(
     res.json({id, name, email, role, requests, connections});
   }
 );
-
-// router.get('/profession', async (req, res) =>{
-//   let professions = await ProfessionStatus.find();
-//   console.log(professions);
-//   res.json(professions);
-// });
 
 module.exports = router;

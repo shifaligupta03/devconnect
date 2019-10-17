@@ -4,7 +4,6 @@ import userProfile from './userProfile';
 import { getProfileByUsername, sendConnectRequest } from '../../actions/profileActions';
 
 function mapStateToProps(state) {
-  console.log(state);
   return {
     auth: state.auth,
     userProfile: state.profile,

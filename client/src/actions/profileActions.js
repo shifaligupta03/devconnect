@@ -150,7 +150,6 @@ export const deleteAccount = () => async dispatch => {
 
 
 export const sendConnectRequest = (connectorId, connectionId) => async dispatch => {
-  // console.log({connectorId, connectionId});
   try {
       let res = await axios.post('/api/profile/sendConnectionRequest',{connectorId, connectionId});
       dispatch({

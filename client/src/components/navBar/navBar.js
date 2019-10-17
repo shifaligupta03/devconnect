@@ -2,10 +2,15 @@ import React from "react";
 import Proptypes from "prop-types";
 import { Link } from "react-router-dom";
 
-const Navbar = ({ auth, logoutUser, clearCurrentProfile, history }) => {
+const Navbar = ({ auth, logoutUser, clearCurrentProfile, history, profile:{ username }={} }) => {
   const { isAuthenticated, user } = auth;
   const authLinks = (
     <ul className="navbar-nav ml-auto">
+      <li className="nav-item">
+        <Link className="nav-link" to={`/profile/${username}`}>
+          {username}
+        </Link>
+      </li>
       <li className="nav-item">
         <a
           href="#"

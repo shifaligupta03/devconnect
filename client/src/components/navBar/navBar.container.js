@@ -7,7 +7,8 @@ import { clearCurrentProfile } from '../../actions/profileActions';
 function mapStateToProps(state) {
     return {
       auth: state.auth,
-      errors: state.errors
+      errors: state.errors,
+      profile: state.profile && state.profile.profile || {}
     };
   }
 

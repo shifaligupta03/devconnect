@@ -36,7 +36,6 @@ export const loginUser = userData => async dispatch => {
 };
 
 export const setCurrentUser = decoded => {
-  console.log(decoded);
   return {
     type: SET_CURRENT_USER,
     payload: decoded,

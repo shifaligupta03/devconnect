@@ -12,8 +12,6 @@ const Dashboard = ({
   auth: {user},
   deleteAccount,
 }) => {
-
-  console.log(user);
   const handleDeleteAccount = e => {
     e.preventDefault();
     deleteAccount();
