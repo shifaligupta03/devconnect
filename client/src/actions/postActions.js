@@ -12,8 +12,7 @@ import {
 
 // Add Post
 export const addPost = postData => async dispatch => {
-  console.log(postData);
-  // dispatch(clearErrors());
+  dispatch(clearErrors());
   try {
     let res = await axios.post('/api/posts', postData);
     dispatch({
@@ -30,7 +29,7 @@ export const addPost = postData => async dispatch => {
 
 // Get Posts
 export const getPosts = () => async dispatch => {
-  dispatch(setPostLoading());
+  // dispatch(setPostLoading());
   try {
     let res = await axios.get('/api/posts');
     dispatch({

@@ -7,30 +7,32 @@ const CommentItem = ({ comment, postId, auth, deleteComment }) => {
   };
 
   return (
-    <div className="card card-body mb-3">
+    <div className="card card-body mt-1">
       <div className="row">
         <div className="col-md-2">
           <a href="profile.html">
             <img
+              width="50" height="50"
               className="rounded-circle d-none d-md-block"
               src={comment.avatar}
               alt=""
             />
           </a>
           <br />
-          <p className="text-center">{comment.name}</p>
         </div>
         <div className="col-md-10">
-          <p className="lead">{comment.text}</p>
-          {comment.user === auth.user.id ? (
+        {comment.user === auth.user.id ? (
             <button
               onClick={()=> handleDelete(postId, comment._id)}
               type="button"
-              className="btn btn-danger mr-1"
+              className="btn btn-danger mr-1" style={{float:"right"}}
             >
-              <i className="fas fa-times" />
+             X
             </button>
           ) : null}
+          <div>{comment.name}</div>
+          <p className="lead">{comment.text}</p>
+          
         </div>
       </div>
     </div>

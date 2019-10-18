@@ -7,7 +7,6 @@ import CommentFeed from "../commentFeed/commentFeed.container";
 import Spinner from '../common/spinner';
 
 const Post = ({ getPost, post: { post, loading }, ...rest }) => {
-  console.log(post);
   const postId = rest.match.params.id;
   useEffect(() => {
     getPost(postId);

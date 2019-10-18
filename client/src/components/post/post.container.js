@@ -3,7 +3,6 @@ import Post from "./post";
 import { getPost } from "../../actions/postActions";
 
 function mapStateToProps(state) {
-  console.log(state);
   return {
     post: state.post
   };

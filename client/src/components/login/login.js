@@ -8,7 +8,7 @@ const Login = ({auth, errors, loginUser, history}) => {
 
   useEffect(() => {
     if (auth.isAuthenticated) {
-      history.push('/dashboard');
+      history.push('/feed');
     }
   }, [auth.isAuthenticated]);
 

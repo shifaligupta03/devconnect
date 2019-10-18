@@ -1,7 +1,7 @@
 import React, { useEffect} from 'react';
 import Proptypes from 'prop-types';
 import PostForm from './postForm.container';
-import PostFeed from './postFeed';
+import PostFeed from './postFeed.container';
 import Spinner from "../common/spinner";
 
 const Posts = ({getPosts, post: {posts, loading}}) => {

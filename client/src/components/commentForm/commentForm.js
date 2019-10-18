@@ -11,7 +11,6 @@ const CommentForm = ({
   errors,
 }) => {
   const [text, setText] = useState('');
-  console.log(name, avatar);
   const handleSubmit = e => {
     e.preventDefault();
     const newComment = {
