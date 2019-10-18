@@ -46,7 +46,7 @@ const PostItem = ({
         </div>
         <div className="col-md-10">
           <p className="lead">{post.text}</p>
-          {/* {showActions ? ( */}
+         {showActions ? ( 
           <span>
             <button
               onClick={e => onLikeClick(post._id)}
@@ -80,12 +80,16 @@ const PostItem = ({
               </button>
             ) : null}
           </span>
-          {/* ) : null} */}
+          ) : null} 
         </div>
       </div>
     </div>
   );
 };
+
+PostItem.defaultProps={
+  showActions: true
+}
 
 PostItem.proptypes = {
   deletePost: Proptypes.func.isRequired,

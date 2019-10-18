@@ -1,16 +1,20 @@
-import React, {useEffect} from 'react';
-import Proptypes from 'prop-types';
-import PostItem from '../Posts/postItem.container';
-import CommentForm from './CommentForm';
-import CommentFeed from './CommentFeed';
+import React, { useEffect } from "react";
+import Proptypes from "prop-types";
+import { Link } from "react-router-dom";
+import PostItem from "../Posts/postItem.container";
+import CommentForm from "../commentForm/commentForm.container";
+import CommentFeed from "../commentFeed/commentFeed.container";
+import Spinner from '../common/spinner';
 
-const Post = ({getPost, post: {post, loading}}) => {
+const Post = ({ getPost, post: { post, loading }, ...rest }) => {
+  console.log(post);
+  const postId = rest.match.params.id;
   useEffect(() => {
-    getPost();
+    getPost(postId);
   }, []);
 
   let postContent =
-    !posts || loading ? (
+    !post || loading || Object.keys(post).length === 0 ? (
       <Spinner />
     ) : (
       <div>
@@ -40,5 +44,5 @@ export default Post;
 
 Post.proptypes = {
   getPosts: Proptypes.func.isRequired,
-  post: Proptypes.object.isRequired,
+  post: Proptypes.object.isRequired
 };
