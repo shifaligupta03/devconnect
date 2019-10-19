@@ -129,7 +129,7 @@ const ProfileSchema = new Schema({
   date: {
     type: Date,
     default: Date.now(),
-  },
+  }
 });
 
 ProfileSchema.plugin(uniqueValidator, {message: '{PATH} must be unique'});

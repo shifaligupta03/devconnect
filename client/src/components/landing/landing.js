@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 const Landing = ({ auth, history }) => {
   useEffect(() => {
     if (auth.isAuthenticated) {
-      history.push('/dashboard');
+      history.push('/feed');
     }
   }, []);
 

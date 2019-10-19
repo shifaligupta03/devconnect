@@ -254,18 +254,52 @@ router.post(
   passport.authenticate('jwt', {session: false}),
   async (req, res) => {
 
-    // const errors = {};
-    // let profile = await Profile.findOne({username: req.params.handle}).populate(
-    //   'user',
-    //   ['name', 'avatar']
-    // );
     let user = await User.findById(req.body.connectionId);
+    let connectorUser = await User.findById(req.body.connectorId);
 
     (user.requests.indexOf(req.body.connectorId)<0 ?
-    user.requests.push(req.body.connectorId) : null);
+    user.requests.push({id: connectorUser.id, name: connectorUser.name}) : null);
     user = await user.save();
     let {id, name, email, role, requests, connections} = user;
     res.json({id, name, email, role, requests, connections});
+  }
+);
+
+router.post(
+  '/acceptConnectionRequest',
+  validate(validateConnectionInput),
+  passport.authenticate('jwt', {session: false}),
+  async (req, res) => {
+    console.log(req.body.connectionId, req.body.connectorId);
+    let user = await User.findById(req.body.connectionId);
+    let connectorUser = await User.findById(req.body.connectorId);
+
+    if(user.connections.filter(conn=>conn.id ==req.body.connectorId).length<1){
+      let removeIndex = user.requests.map(item => item.id.toString()).indexOf(connectorUser.id);
+      user.requests.splice(removeIndex, 1);
+      user.connections.push({id: connectorUser.id, name: connectorUser.name})
+    }
+
+    user = await user.save();
+    let {id, name, email, role, requests, connections} = user;
+    res.json({_id:id, name, email, role, requests, connections});
+  }
+);
+
+router.post(
+  '/rejectConnectionRequest',
+  validate(validateConnectionInput),
+  passport.authenticate('jwt', {session: false}),
+  async (req, res) => {
+    console.log(req.body.connectionId, req.body.connectorId);
+    let user = await User.findById(req.body.connectionId);
+    let connectorUser = await User.findById(req.body.connectorId);
+    let removeIndex = user.requests.map(item => item.id.toString()).indexOf(connectorUser.id);
+      user.requests.splice(removeIndex, 1);
+
+    user = await user.save();
+    let {id, name, email, role, requests, connections} = user;
+    res.json({_id:id, name, email, role, requests, connections});
   }
 );
 

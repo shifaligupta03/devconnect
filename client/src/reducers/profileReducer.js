@@ -4,6 +4,8 @@ import {
   CLEAR_CURRENT_PROFILE,
   GET_PROFILES,
   SEND_CONNECT_REQUEST,
+  ACCEPT_CONNECTION,
+  REJECT_CONNECTION,
 } from '../actions/types';
 
 const initialState = {
@@ -38,10 +40,25 @@ export default function(state = initialState, action) {
         profile: null,
       };
     case SEND_CONNECT_REQUEST:
+      const newProfileState = Object.assign({}, state);
+      newProfileState.profile.user = action.payload;
+      return {
+        ...state,
+        profile: newProfileState.profile,
+        loading: false,
+      };
+    case ACCEPT_CONNECTION:
       const newState = Object.assign({}, state);
       newState.profile.user = action.payload;
       return {
         profile: newState.profile,
+        loading: false,
+      };
+    case REJECT_CONNECTION:
+      const newConnectionState = Object.assign({}, state);
+      newConnectionState.profile.user = action.payload;
+      return {
+        profile: newConnectionState.profile,
         loading: false,
       };
     default:

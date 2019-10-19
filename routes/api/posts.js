@@ -6,11 +6,18 @@ const passport = require('passport');
 const Post = require('../../models/Post');
 const Profile = require('../../models/Profile');
 const validatePostInput = require('../../validation/post');
+const getUser =  require('../../middleware/getUser');
 
 router.get('/test', (req, res) => res.json({msg: 'posts'}));
-router.get('/', async (req, res) => {
+router.get('/', getUser ,async (req, res) => {
   try {
-    let posts = await Post.find().sort({date: -1});
+    let connections = await Post.findById(req.user);
+    let posts=[];
+    if(connections){
+      console.log('show connection posts');
+    }
+    //  posts = await Post.find().sort({date: -1});
+    // console.log(posts);
     res.send(posts);
   } catch (err) {
     res.status(404).json({nopostfound: 'No Posts found'});

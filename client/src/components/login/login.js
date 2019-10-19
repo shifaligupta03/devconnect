@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import Proptypes from 'prop-types';
 import TextFieldGroup from '../common/TextFieldGroup';
 
-const Login = ({auth, errors, loginUser, history}) => {
+const Login = ({auth, errors, loginUser, history, getCurrentProfile}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -19,6 +19,8 @@ const Login = ({auth, errors, loginUser, history}) => {
       password,
     };
     loginUser(userData);
+    setTimeout(()=>getCurrentProfile(),3000);
+    
   };
 
   return (

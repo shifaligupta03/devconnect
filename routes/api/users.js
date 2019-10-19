@@ -44,11 +44,14 @@ router.post("/login", validate(validateLoginInput), async (req, res) => {
       id: user.id,
       name: user.name,
       avatar: user.avatar,
-      role: user.role
+      role: user.role,
+      requests: user.requests,
+      connections: user.connections
     };
     const token = await jwt.sign(payload, keys.jwtSecret, { expiresIn: 3600 });
     res.json({ success: true, token: "Bearer " + token });
   } catch (error) {
+    console.log(error);
     let { errors } = error;
     if (errors) {
       res.status(400).json(showErrors(errors));
@@ -60,6 +63,7 @@ router.get(
   "/current",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    console.log('gfdhfg');
     res.json({
       id: req.user.id,
       name: req.user.name,

@@ -1,18 +1,18 @@
-import React from "react";
-import Proptypes from "prop-types";
+import React from 'react';
+import Proptypes from 'prop-types';
 
 const ProfileAbout = ({
   profile: {
-    skills=[],
-    bio="",
-    headquarters="",
-    companySize="",
-    founded="",
-    role="",
-    user: { name ="" } ={}
-  }
+    skills = [],
+    bio = '',
+    headquarters = '',
+    companySize = '',
+    founded = '',
+    role = '',
+    user: {name = '', connections = []} = {},
+  },
 }) => {
-  const firstName = name.trim().split(" ")[0];
+  const firstName = name.trim().split(' ')[0];
 
   const UserSkills = skills.map((skill, index) => (
     <div key={index} className="p-3">
@@ -43,6 +43,16 @@ const ProfileAbout = ({
       </div>
     </React.Fragment>
   );
+  const connectionsInfo = (
+    <React.Fragment>
+      {connections.length ? (
+        <span>({connections.length} connections)</span>
+      ) : (
+        <span>No Connections Yet</span>
+      )}
+    </React.Fragment>
+  );
+
   return (
     <div className="row">
       <div className="col-md-12">
@@ -55,15 +65,16 @@ const ProfileAbout = ({
               <span>{firstName} does not have a bio</span>
             )}
           </p>
+          <p className="lead">{connectionsInfo}</p>
           <hr />
-          {role === "Employer" ? companyAbout : employeeAbout}
+          {role === 'Employer' ? companyAbout : employeeAbout}
         </div>
       </div>
     </div>
   );
 };
 ProfileAbout.proptypes = {
-  profile: Proptypes.object.isRequired
+  profile: Proptypes.object.isRequired,
 };
 
 export default ProfileAbout;

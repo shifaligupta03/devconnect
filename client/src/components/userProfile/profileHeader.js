@@ -20,7 +20,7 @@ const ProfileHeader = ({
   sendConnectRequest,
   connectorId
 }) => {
-  let alreadySentConnectionRequest = requests.indexOf(connectorId) > -1;
+  let alreadySentConnectionRequest = requests.filter(req=> req.id== connectorId).length>0;
 
   return (
     <div className="row">
@@ -32,7 +32,7 @@ const ProfileHeader = ({
             </div>
           </div>
           <div className="text-center">
-            <h1 className="display-4 text-center">{name}</h1>
+            <h1 className="display-4 text-center">{name} </h1>
             <p className="lead text-center">
               {role == "Employer" ? industryType : status}
               {company ? <span>at {company}</span> : null}
@@ -45,7 +45,7 @@ const ProfileHeader = ({
                 </a>
               ) : null}
             </p>
-            {connectorId != _id ? (
+            {connectorId && connectorId != _id ? (
               <button
                 onClick={e => sendConnectRequest(connectorId, _id)}
                 className="btn btn-primary"

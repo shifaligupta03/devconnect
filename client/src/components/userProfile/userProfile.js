@@ -5,13 +5,16 @@ import Spinner from '../common/spinner';
 import ProfileHeader from './profileHeader';
 import ProfileAbout from './profileAbout';
 import ProfileCreds from './profileCreds';
+import ProfileRequests from './profileRequests';
 
 const userProfile = ({
   sendConnectRequest,
+  acceptConnection,
+  rejectConnection,
   getProfileByUsername,
   userProfile: {profile, loading},
   auth: {
-    user: {id},
+    user: {id=""},
   },
   ...rest
 }) => {
@@ -26,19 +29,22 @@ const userProfile = ({
       <Spinner />
     ) : (
       <div>
-        <div className="row">
-          <div className="col-md-6">
-            <Link to="/profiles" className="btn btn-light mb-3 float-left">
-              Back To Profiles
-            </Link>
-          </div>
-          <div className="col-md-6" />
-        </div>
         <ProfileHeader
           profile={profile}
           connectorId={id}
           sendConnectRequest={sendConnectRequest}
         />
+        {profile &&
+        profile.user &&
+        profile.user.requests &&
+        profile.user.requests.length &&
+        profile.user._id == id ? (
+          <ProfileRequests
+            profile={profile}
+            acceptConnection={acceptConnection}
+            rejectConnection={rejectConnection}
+          />
+        ) : null}
         <ProfileAbout profile={profile} />
         {profile.role === 'Employee' ? (
           <ProfileCreds

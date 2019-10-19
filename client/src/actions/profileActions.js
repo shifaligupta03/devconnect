@@ -7,6 +7,8 @@ import {
   CLEAR_CURRENT_PROFILE,
   SET_CURRENT_USER,
   SEND_CONNECT_REQUEST,
+  ACCEPT_CONNECTION,
+  REJECT_CONNECTION,
 } from './types';
 
 export const getCurrentProfile = () => async dispatch => {
@@ -26,7 +28,7 @@ export const getCurrentProfile = () => async dispatch => {
 };
 
 //
-export const getProfileByUsername = (handle) => async dispatch => {
+export const getProfileByUsername = handle => async dispatch => {
   dispatch(setProfileLoading());
   try {
     let res = await axios.get(`/api/profile/handle/${handle}`);
@@ -42,8 +44,6 @@ export const getProfileByUsername = (handle) => async dispatch => {
   }
 };
 
-
-
 // Get all profiles
 export const getProfiles = () => dispatch => {
   dispatch(setProfileLoading());
@@ -52,13 +52,13 @@ export const getProfiles = () => dispatch => {
     .then(res =>
       dispatch({
         type: GET_PROFILES,
-        payload: res.data
+        payload: res.data,
       })
     )
     .catch(err =>
       dispatch({
         type: GET_PROFILES,
-        payload: null
+        payload: null,
       })
     );
 };
@@ -87,7 +87,7 @@ export const clearCurrentProfile = () => {
   };
 };
 
-export const addExperience = (expData, history) => async dispatch =>{
+export const addExperience = (expData, history) => async dispatch => {
   try {
     let res = await axios.post('/api/profile/experience', expData);
     history.push('/dashboard');
@@ -97,9 +97,9 @@ export const addExperience = (expData, history) => async dispatch =>{
       payload: err.response.data,
     });
   }
-}
+};
 
-export const addEducation = (eduData, history) => async dispatch =>{
+export const addEducation = (eduData, history) => async dispatch => {
   try {
     let res = await axios.post('/api/profile/education', eduData);
     history.push('/dashboard');
@@ -109,21 +109,21 @@ export const addEducation = (eduData, history) => async dispatch =>{
       payload: err.response.data,
     });
   }
-}
-
-export const deleteExperience = (id) => async dispatch => {
-    if (window.confirm('Are you sure you want to delete your experience?')) {
-      let res = await axios.delete('/api/profile/experience/'+id);
-      dispatch({
-        type: GET_PROFILE,
-        payload: res.data,
-      });
-    }
 };
 
-export const deleteEducation = (id) => async dispatch => {
+export const deleteExperience = id => async dispatch => {
   if (window.confirm('Are you sure you want to delete your experience?')) {
-    let res = await axios.delete('/api/profile/education/'+id);
+    let res = await axios.delete('/api/profile/experience/' + id);
+    dispatch({
+      type: GET_PROFILE,
+      payload: res.data,
+    });
+  }
+};
+
+export const deleteEducation = id => async dispatch => {
+  if (window.confirm('Are you sure you want to delete your experience?')) {
+    let res = await axios.delete('/api/profile/education/' + id);
     dispatch({
       type: GET_PROFILE,
       payload: res.data,
@@ -148,14 +148,61 @@ export const deleteAccount = () => async dispatch => {
   }
 };
 
-
-export const sendConnectRequest = (connectorId, connectionId) => async dispatch => {
+export const sendConnectRequest = (
+  connectorId,
+  connectionId
+) => async dispatch => {
   try {
-      let res = await axios.post('/api/profile/sendConnectionRequest',{connectorId, connectionId});
-      dispatch({
-        type: SEND_CONNECT_REQUEST,
-        payload: res.data,
-      });
+    let res = await axios.post('/api/profile/sendConnectionRequest', {
+      connectorId,
+      connectionId,
+    });
+    dispatch({
+      type: SEND_CONNECT_REQUEST,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: GET_ERRORS,
+      payload: err.response.data,
+    });
+  }
+};
+
+export const acceptConnection = (
+  connectorId,
+  connectionId
+) => async dispatch => {
+  try {
+    let res = await axios.post('/api/profile/acceptConnectionRequest', {
+      connectorId,
+      connectionId,
+    });
+    dispatch({
+      type: ACCEPT_CONNECTION,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: GET_ERRORS,
+      payload: err.response.data,
+    });
+  }
+};
+
+export const rejectConnection = (
+  connectorId,
+  connectionId
+) => async dispatch => {
+  try {
+    let res = await axios.post('/api/profile/rejectConnectionRequest', {
+      connectorId,
+      connectionId,
+    });
+    dispatch({
+      type: REJECT_CONNECTION,
+      payload: res.data,
+    });
   } catch (err) {
     dispatch({
       type: GET_ERRORS,
