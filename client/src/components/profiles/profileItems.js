@@ -1,17 +1,17 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import React from 'react';
+import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 
-const ProfileItem = ({ profile }) => {
+const ProfileItem = ({profile}) => {
   let {
-    user: { avatar, name },
+    user: {avatar, name},
     status,
     company,
     city,
     username,
     skills,
     role,
-    industryType
+    industryType,
   } = profile;
 
   return (
@@ -23,7 +23,7 @@ const ProfileItem = ({ profile }) => {
         <div className="col-lg-5 col-md-4 col-8">
           <h3>{name}</h3>
           <p>
-            {role == "Employer" ? industryType : status}
+            {role == 'Employer' ? industryType : status}
             {company ? <span>at {company}</span> : null}
           </p>
           <p>{city && <span>{city}</span>}</p>
@@ -50,7 +50,7 @@ const ProfileItem = ({ profile }) => {
 };
 
 ProfileItem.propTypes = {
-  profile: PropTypes.object.isRequired
+  profile: PropTypes.object.isRequired,
 };
 
 export default ProfileItem;

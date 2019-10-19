@@ -2,25 +2,9 @@ import React from 'react';
 import Proptypes from 'prop-types';
 
 const ProfileRequests = ({
-  profile: {
-    status,
-    city,
-    company,
-    website,
-    role,
-    industryType,
-    user: {
-      _id = '',
-      name = '',
-      avatar = '',
-      requests = [],
-      connections = [],
-    } = {},
-  },
-  sendConnectRequest,
+  profile: {user: {_id = '', requests = []} = {}},
   acceptConnection,
   rejectConnection,
-  connectorId,
 }) => {
   const requestcontent =
     requests.length &&
@@ -58,4 +42,3 @@ ProfileRequests.proptypes = {
 };
 
 export default ProfileRequests;
-

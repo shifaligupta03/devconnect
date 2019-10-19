@@ -127,8 +127,6 @@ const setProfile = ({
         error={errors.founded}
         required={true}
       />
-
-     
     </React.Fragment>
   );
 

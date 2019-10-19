@@ -4,12 +4,11 @@ import TextFieldGroup from '../common/TextFieldGroup';
 import registerReducer from './reducer';
 import SelectListGroup from '../common/selectListGroup';
 
-
 const Register = ({auth, errors, registerUser, history}) => {
   const RoleOptions = [
     {label: 'Employee', value: 'Employee'},
     {label: 'Employer', value: 'Employer'},
-  ]
+  ];
   const initialState = {
     name: '',
     email: '',
@@ -83,7 +82,7 @@ const Register = ({auth, errors, registerUser, history}) => {
                 error={errors.confirmPassword}
                 required={true}
               />
-               <SelectListGroup
+              <SelectListGroup
                 label="Select your Role"
                 placeholder=""
                 name="role"

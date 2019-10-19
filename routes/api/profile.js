@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
 const passport = require('passport');
 
 const Profile = require('../../models/Profile');
@@ -13,9 +12,7 @@ const getUser = require('../../middleware/getUser');
 const showErrors = require('../../validation/error');
 
 const User = require('../../models/User');
-const ProfessionStatus = require('../../models/Profession');
-
-router.get('/test', (req, res) => res.json({msg: 'profile'}));
+// const ProfessionStatus = require('../../models/Profession');
 
 router.get(
   '/',
@@ -43,7 +40,7 @@ router.get('/handle/:handle', async (req, res) => {
     const errors = {};
     let profile = await Profile.findOne({username: req.params.handle}).populate(
       'user',
-      ['name', 'avatar', 'requests','connections']
+      ['name', 'avatar', 'requests', 'connections']
     );
     if (!profile) {
       errors.noprofile = 'There is no profile for this user';
@@ -78,7 +75,6 @@ router.get('/user/:user_id', async (req, res) => {
 
 router.get('/all', getUser, async (req, res) => {
   try {
-    // let loggedInUser = req.user ||'';
     const errors = {};
     let profile = await Profile.find().populate('user', ['name', 'avatar']);
     if (!profile) {
@@ -253,12 +249,12 @@ router.post(
   validate(validateConnectionInput),
   passport.authenticate('jwt', {session: false}),
   async (req, res) => {
-
     let user = await User.findById(req.body.connectionId);
     let connectorUser = await User.findById(req.body.connectorId);
 
-    (user.requests.indexOf(req.body.connectorId)<0 ?
-    user.requests.push({id: connectorUser.id, name: connectorUser.name}) : null);
+    user.requests.indexOf(req.body.connectorId) < 0
+      ? user.requests.push({id: connectorUser.id, name: connectorUser.name})
+      : null;
     user = await user.save();
     let {id, name, email, role, requests, connections} = user;
     res.json({id, name, email, role, requests, connections});
@@ -270,19 +266,21 @@ router.post(
   validate(validateConnectionInput),
   passport.authenticate('jwt', {session: false}),
   async (req, res) => {
-    console.log(req.body.connectionId, req.body.connectorId);
     let user = await User.findById(req.body.connectionId);
     let connectorUser = await User.findById(req.body.connectorId);
-
-    if(user.connections.filter(conn=>conn.id ==req.body.connectorId).length<1){
-      let removeIndex = user.requests.map(item => item.id.toString()).indexOf(connectorUser.id);
+    if (
+      user.connections.filter(conn => conn.id == req.body.connectorId).length <
+      1
+    ) {
+      let removeIndex = user.requests
+        .map(item => item.id.toString())
+        .indexOf(connectorUser.id);
       user.requests.splice(removeIndex, 1);
-      user.connections.push({id: connectorUser.id, name: connectorUser.name})
+      user.connections.push({id: connectorUser.id, name: connectorUser.name});
     }
-
     user = await user.save();
     let {id, name, email, role, requests, connections} = user;
-    res.json({_id:id, name, email, role, requests, connections});
+    res.json({_id: id, name, email, role, requests, connections});
   }
 );
 
@@ -291,15 +289,15 @@ router.post(
   validate(validateConnectionInput),
   passport.authenticate('jwt', {session: false}),
   async (req, res) => {
-    console.log(req.body.connectionId, req.body.connectorId);
     let user = await User.findById(req.body.connectionId);
     let connectorUser = await User.findById(req.body.connectorId);
-    let removeIndex = user.requests.map(item => item.id.toString()).indexOf(connectorUser.id);
-      user.requests.splice(removeIndex, 1);
-
+    let removeIndex = user.requests
+      .map(item => item.id.toString())
+      .indexOf(connectorUser.id);
+    user.requests.splice(removeIndex, 1);
     user = await user.save();
     let {id, name, email, role, requests, connections} = user;
-    res.json({_id:id, name, email, role, requests, connections});
+    res.json({_id: id, name, email, role, requests, connections});
   }
 );
 

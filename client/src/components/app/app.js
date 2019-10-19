@@ -18,7 +18,6 @@ import userProfile from '../userProfile/userProfile.container';
 import AddExperience from '../addExperience/add-experience.container';
 import AddEducation from '../addEducation/add-education.container';
 import Posts from '../Posts/posts.container';
-import Post from '../post/post.container';
 import PrivateRoute from '../privateRoute/privateRoute.container';
 
 if (localStorage.jwtToken) {
@@ -29,7 +28,6 @@ if (localStorage.jwtToken) {
   if (decoded.exp < currentTime) {
     store.dispatch(clearCurrentProfile());
     store.dispatch(logoutUser());
-    //TODO: clear current Profile
     window.location.href = '/login';
   }
 }
@@ -50,7 +48,6 @@ const App = () => (
             <PrivateRoute path="/add-experience" component={AddExperience} />
             <PrivateRoute path="/add-education" component={AddEducation} />
             <PrivateRoute path="/feed" component={Posts} />
-            <PrivateRoute exact path="/post/:id" component={Post} />
             <Route path="/profiles" component={Profiles} />
             <Route path="/profile/:username" component={userProfile} />
           </Switch>

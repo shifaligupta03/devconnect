@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import './landing.css';
 import Proptypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
-const Landing = ({ auth, history }) => {
+const Landing = ({auth, history}) => {
   useEffect(() => {
     if (auth.isAuthenticated) {
       history.push('/feed');
@@ -21,22 +21,21 @@ const Landing = ({ auth, history }) => {
                 {' '}
                 Create a developer profile/portfolio, share posts and get help
                 from other developers
-            </p>
+              </p>
               <hr />
               <Link className="btn btn-lg btn-info mr-2" to="/register">
                 Sign Up
-            </Link>
+              </Link>
               <Link className="btn btn-lg btn-light" to="/login">
                 Login
-            </Link>
-
+              </Link>
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Landing;
 

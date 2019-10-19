@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
-import Proptypes from "prop-types";
+import React, {useEffect} from 'react';
+import Proptypes from 'prop-types';
 
-const CommentItem = ({ comment, postId, auth, deleteComment }) => {
+const CommentItem = ({comment, postId, auth, deleteComment}) => {
   const handleDelete = (postId, commentId) => {
     deleteComment(postId, commentId);
   };
@@ -12,7 +12,8 @@ const CommentItem = ({ comment, postId, auth, deleteComment }) => {
         <div className="col-md-2">
           <a href="profile.html">
             <img
-              width="50" height="50"
+              width="50"
+              height="50"
               className="rounded-circle d-none d-md-block"
               src={comment.avatar}
               alt=""
@@ -21,18 +22,18 @@ const CommentItem = ({ comment, postId, auth, deleteComment }) => {
           <br />
         </div>
         <div className="col-md-10">
-        {comment.user === auth.user.id ? (
+          {comment.user === auth.user.id ? (
             <button
-              onClick={()=> handleDelete(postId, comment._id)}
+              onClick={() => handleDelete(postId, comment._id)}
               type="button"
-              className="btn btn-danger mr-1" style={{float:"right"}}
+              className="btn btn-danger mr-1"
+              style={{float: 'right'}}
             >
-             X
+              X
             </button>
           ) : null}
           <div>{comment.name}</div>
           <p className="lead">{comment.text}</p>
-          
         </div>
       </div>
     </div>
@@ -45,5 +46,5 @@ CommentItem.proptypes = {
   deleteComment: Proptypes.func.isRequired,
   comment: Proptypes.object.isRequired,
   auth: Proptypes.object.isRequired,
-  postId: Proptypes.string.isRequired
+  postId: Proptypes.string.isRequired,
 };

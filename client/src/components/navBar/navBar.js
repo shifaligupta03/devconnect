@@ -1,21 +1,30 @@
-import React from "react";
-import Proptypes from "prop-types";
-import { Link } from "react-router-dom";
+import React from 'react';
+import Proptypes from 'prop-types';
+import {Link} from 'react-router-dom';
 
-const Navbar = ({ auth, logoutUser, clearCurrentProfile, history, profile:{ username }={} }) => {
-  const { isAuthenticated, user } = auth;
+const Navbar = ({
+  auth,
+  logoutUser,
+  clearCurrentProfile,
+  history,
+  profile: {username} = {},
+}) => {
+  const {isAuthenticated, user} = auth;
   const authLinks = (
     <ul className="navbar-nav ml-auto">
-       <li className="nav-item">
+      <li className="nav-item">
         <Link className="nav-link" to="/dashboard">
           Manage Profile
         </Link>
       </li>
-      <li className="nav-item">
-        <Link className="nav-link" to={`/profile/${username}`}>
-          {user.name}
-        </Link>
-      </li>
+      {username ? (
+        <li className="nav-item">
+          <Link className="nav-link" to={`/profile/${username}`}>
+            {user.name}
+          </Link>
+        </li>
+      ) : null}
+
       <li className="nav-item">
         <a
           href="#"
@@ -27,7 +36,7 @@ const Navbar = ({ auth, logoutUser, clearCurrentProfile, history, profile:{ user
         >
           <img
             className="rounded-circle"
-            style={{ width: "25px", marginRight: "5px" }}
+            style={{width: '25px', marginRight: '5px'}}
             src={user.avatar}
             alt={user.name}
           />
@@ -71,8 +80,8 @@ const Navbar = ({ auth, logoutUser, clearCurrentProfile, history, profile:{ user
             <ul className="navbar-nav mr-auto">
               <li className="nav-item">
                 <Link to="/profiles" className="nav-link">
-                  {" "}
-                  Developers
+                  {' '}
+                  Find Connections
                 </Link>
               </li>
             </ul>
@@ -90,5 +99,5 @@ export default Navbar;
 Navbar.proptypes = {
   logoutUser: Proptypes.func.isRequired,
   clearCurrentProfile: Proptypes.func.isRequired,
-  auth: Proptypes.object.isRequired
+  auth: Proptypes.object.isRequired,
 };

@@ -1,13 +1,9 @@
-import React, { useReducer, useEffect } from "react";
-import Proptypes from "prop-types";
-import Spinner from "../common/spinner";
-import ProfileItem from "./profileItems";
+import React, {useReducer, useEffect} from 'react';
+import Proptypes from 'prop-types';
+import Spinner from '../common/spinner';
+import ProfileItem from './profileItems';
 
-const Profiles = ({
-  userProfile: { profiles, loading },
-  auth,
-  getProfiles
-}) => {
+const Profiles = ({userProfile: {profiles, loading}, auth, getProfiles}) => {
   useEffect(() => {
     getProfiles();
   }, []);
@@ -45,5 +41,5 @@ export default Profiles;
 
 Profiles.proptypes = {
   getProfiles: Proptypes.func.isRequired,
-  userProfile: Proptypes.object.isRequired
+  userProfile: Proptypes.object.isRequired,
 };

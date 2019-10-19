@@ -1,7 +1,12 @@
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import {connect} from 'react-redux';
+import {withRouter} from 'react-router-dom';
 import userProfile from './userProfile';
-import { getProfileByUsername, sendConnectRequest, acceptConnection, rejectConnection } from '../../actions/profileActions';
+import {
+  getProfileByUsername,
+  sendConnectRequest,
+  acceptConnection,
+  rejectConnection,
+} from '../../actions/profileActions';
 
 function mapStateToProps(state) {
   return {
@@ -12,5 +17,5 @@ function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps,
-  { getProfileByUsername, sendConnectRequest, acceptConnection, rejectConnection }
+  {getProfileByUsername, sendConnectRequest, acceptConnection, rejectConnection}
 )(withRouter(userProfile));

@@ -1,6 +1,11 @@
 import {connect} from 'react-redux';
 import PostItem from './postItem';
-import { deletePost, addLike, removeLike, addComment } from '../../actions/postActions';
+import {
+  deletePost,
+  addLike,
+  removeLike,
+  addComment,
+} from '../../actions/postActions';
 
 function mapStateToProps(state) {
   return {
@@ -11,5 +16,5 @@ function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps,
-  { deletePost, addLike, removeLike, addComment}
+  {deletePost, addLike, removeLike, addComment}
 )(PostItem);

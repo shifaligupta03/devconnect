@@ -2,7 +2,13 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 
-const PostForm = ({addPost, auth:{user:{ name, avatar}}, errors}) => {
+const PostForm = ({
+  addPost,
+  auth: {
+    user: {name, avatar},
+  },
+  errors,
+}) => {
   const [text, setText] = useState('');
   const handleSubmit = e => {
     e.preventDefault();
@@ -10,7 +16,7 @@ const PostForm = ({addPost, auth:{user:{ name, avatar}}, errors}) => {
     const newPost = {
       text,
       name,
-      avatar
+      avatar,
     };
     addPost(newPost);
     setText('');

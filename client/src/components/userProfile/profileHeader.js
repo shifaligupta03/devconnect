@@ -1,5 +1,5 @@
-import React from "react";
-import Proptypes from "prop-types";
+import React from 'react';
+import Proptypes from 'prop-types';
 
 const ProfileHeader = ({
   profile: {
@@ -10,17 +10,18 @@ const ProfileHeader = ({
     role,
     industryType,
     user: {
-      _id = "",
-      name = "",
-      avatar = "",
+      _id = '',
+      name = '',
+      avatar = '',
       requests = [],
-      connections = []
-    } = {}
+      connections = [],
+    } = {},
   },
   sendConnectRequest,
-  connectorId
+  connectorId,
 }) => {
-  let alreadySentConnectionRequest = requests.filter(req=> req.id== connectorId).length>0;
+  let alreadySentConnectionRequest =
+    requests.filter(req => req.id == connectorId).length > 0;
 
   return (
     <div className="row">
@@ -34,7 +35,7 @@ const ProfileHeader = ({
           <div className="text-center">
             <h1 className="display-4 text-center">{name} </h1>
             <p className="lead text-center">
-              {role == "Employer" ? industryType : status}
+              {role == 'Employer' ? industryType : status}
               {company ? <span>at {company}</span> : null}
             </p>
             {city ? <p>{city}</p> : null}
@@ -52,8 +53,8 @@ const ProfileHeader = ({
                 disabled={alreadySentConnectionRequest}
               >
                 {alreadySentConnectionRequest
-                  ? "Connection Request Sent"
-                  : "Connect"}
+                  ? 'Connection Request Sent'
+                  : 'Connect'}
               </button>
             ) : null}
           </div>
@@ -64,7 +65,7 @@ const ProfileHeader = ({
 };
 
 ProfileHeader.proptypes = {
-  profile: Proptypes.object.isRequired
+  profile: Proptypes.object.isRequired,
 };
 
 export default ProfileHeader;

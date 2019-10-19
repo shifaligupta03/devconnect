@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import {Link} from 'react-router-dom';
 import Proptypes from 'prop-types';
 import Spinner from '../common/spinner';
 import ProfileHeader from './profileHeader';
@@ -14,7 +13,7 @@ const userProfile = ({
   getProfileByUsername,
   userProfile: {profile, loading},
   auth: {
-    user: {id=""},
+    user: {id = ''},
   },
   ...rest
 }) => {

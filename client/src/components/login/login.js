@@ -19,8 +19,7 @@ const Login = ({auth, errors, loginUser, history, getCurrentProfile}) => {
       password,
     };
     loginUser(userData);
-    setTimeout(()=>getCurrentProfile(),3000);
-    
+    setTimeout(() => getCurrentProfile(), 3000);
   };
 
   return (

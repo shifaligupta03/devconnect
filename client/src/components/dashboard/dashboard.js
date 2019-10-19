@@ -29,9 +29,13 @@ const Dashboard = ({
         <p className="lead text-muted">
           Welcome <Link to={`/profile/${profile.username}`}> {user.name} </Link>{' '}
         </p>
-        <ProfileActions />
-        <Experience experience={profile.experience} />
-        <Education education={profile.education} />
+        <ProfileActions profile={profile} />
+        {profile.headquarters ? null : (
+          <React.Fragment>
+           <Experience experience={profile.experience} />
+           <Education education={profile.education} />
+           </React.Fragment>
+        )}
         <div style={{marginBottom: '60px'}}>
           <button onClick={handleDeleteAccount} className="btn btn-danger">
             Delete My Account
@@ -53,7 +57,6 @@ const Dashboard = ({
       <div className="container">
         <div className="row">
           <div className="col-md-12">
-            {/* <h1 className="display-4"> Dashboard</h1> */}
             {dashboardContent}
           </div>
         </div>

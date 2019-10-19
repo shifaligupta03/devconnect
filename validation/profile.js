@@ -70,7 +70,7 @@ module.exports = Joi.object({
       'string.empty': `Username cannot be an empty field`,
       'any.required': `Username is a required field`,
     }),
-    headquarters: Joi.any()
+  headquarters: Joi.any()
     .when('role', {
       is: 'Employer',
       then: Joi.required(),
@@ -80,7 +80,7 @@ module.exports = Joi.object({
       'string.empty': `HeadQuarters cannot be an empty field`,
       'any.required': `HeadQuarters is a required field`,
     }),
-    industryType: Joi.any()
+  industryType: Joi.any()
     .when('role', {
       is: 'Employer',
       then: Joi.required(),
@@ -90,7 +90,7 @@ module.exports = Joi.object({
       'string.empty': `Industry Type cannot be an empty field`,
       'any.required': `Industry Type is a required field`,
     }),
-    companySize: Joi.any()
+  companySize: Joi.any()
     .when('role', {
       is: 'Employer',
       then: Joi.required(),
@@ -100,7 +100,7 @@ module.exports = Joi.object({
       'string.empty': `Company Size cannot be an empty field`,
       'any.required': `Company Size is a required field`,
     }),
-    founded: Joi.any()
+  founded: Joi.any()
     .when('role', {
       is: 'Employer',
       then: Joi.required(),
@@ -110,7 +110,7 @@ module.exports = Joi.object({
       'string.empty': `Founded cannot be an empty field`,
       'any.required': `Founded is a required field`,
     }),
-    role: Joi.string()
+  role: Joi.string()
     .required()
     .messages({
       'any.required': `Role is a required field`,

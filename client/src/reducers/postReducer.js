@@ -26,14 +26,14 @@ export default function(state = initialState, action) {
         loading: false,
       };
     case GET_POST:
-      let newStatePosts = state.posts.map(
-        post => (post._id == action.payload._id ? {...post,...action.payload} : post)
+      let newStatePosts = state.posts.map(post =>
+        post._id == action.payload._id ? {...post, ...action.payload} : post
       );
-    return {
-      ...state,
-      posts: newStatePosts,
-      loading: false
-    };
+      return {
+        ...state,
+        posts: newStatePosts,
+        loading: false,
+      };
     case ADD_POST:
       return {
         ...state,

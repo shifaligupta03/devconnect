@@ -44,7 +44,6 @@ export const getProfileByUsername = handle => async dispatch => {
   }
 };
 
-// Get all profiles
 export const getProfiles = () => dispatch => {
   dispatch(setProfileLoading());
   axios
